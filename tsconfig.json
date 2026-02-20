@@ -1,0 +1,3 @@
+{
+  "extends": "@outline-convex/config/tsconfig.base.json"
+}
