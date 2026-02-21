@@ -5,12 +5,12 @@ Mobile-first PWA connecting Ghanaian educators with WASSCE/Cambridge students. B
 ## Commands
 
 ```bash
-pnpm dev              # Start all services (web + convex backend)
-pnpm dev:web          # Frontend only (Vite on :5173)
-pnpm dev:server       # Convex backend only
-pnpm build            # Build all packages
-pnpm check-types      # TypeScript check across monorepo
-pnpm check            # Lint + format (oxlint + oxfmt)
+bun dev              # Start all services (web + convex backend)
+bun dev:web          # Frontend only (Vite on :5173)
+bun dev:server       # Convex backend only
+bun build            # Build all packages
+bun check-types      # TypeScript check across monorepo
+bun check            # Lint + format (oxlint + oxfmt)
 ```
 
 ### Backend-specific
@@ -55,7 +55,7 @@ Three roles: `learner` (default on signup), `team_member` (via invite), `admin` 
 - Convex uses `triggers` (not Better Auth's `databaseHooks`) for user lifecycle — see `auth.ts`
 - `npx convex dev --once` fails if local backend is already running on :3210 — use `npx convex typecheck` for CI-free type checking
 - Don't commit plan docs in `docs/plans/` — design docs only
-- The `services` table is missing a `teamMemberId` field — needs a schema migration before NOR-15
+- Services use a hybrid ownership model: `platform` (admin-created, providers assigned via `serviceProviders` table) and `custom` (team member-created, gated by `canCreateServices` toggle)
 
 ## Workflow
 
