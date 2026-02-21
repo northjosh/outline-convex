@@ -9,16 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ServicesRouteImport } from './routes/services'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ServicesServiceIdRouteImport } from './routes/services.$serviceId'
+import { Route as ServicesIndexRouteImport } from './routes/services/index'
+import { Route as ServicesServiceIdRouteImport } from './routes/services/$serviceId'
+import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
+import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 
-const ServicesRoute = ServicesRouteImport.update({
-  id: '/services',
-  path: '/services',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -29,54 +26,90 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesIndexRoute = ServicesIndexRouteImport.update({
+  id: '/services/',
+  path: '/services/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesServiceIdRoute = ServicesServiceIdRouteImport.update({
-  id: '/$serviceId',
-  path: '/$serviceId',
-  getParentRoute: () => ServicesRoute,
+  id: '/services/$serviceId',
+  path: '/services/$serviceId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthSignupRoute = AuthSignupRouteImport.update({
+  id: '/_auth/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/_auth/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
-  '/services': typeof ServicesRouteWithChildren
+  '/login': typeof AuthLoginRoute
+  '/signup': typeof AuthSignupRoute
   '/services/$serviceId': typeof ServicesServiceIdRoute
+  '/services/': typeof ServicesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
-  '/services': typeof ServicesRouteWithChildren
+  '/login': typeof AuthLoginRoute
+  '/signup': typeof AuthSignupRoute
   '/services/$serviceId': typeof ServicesServiceIdRoute
+  '/services': typeof ServicesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
-  '/services': typeof ServicesRouteWithChildren
+  '/_auth/login': typeof AuthLoginRoute
+  '/_auth/signup': typeof AuthSignupRoute
   '/services/$serviceId': typeof ServicesServiceIdRoute
+  '/services/': typeof ServicesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/services' | '/services/$serviceId'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/signup'
+    | '/services/$serviceId'
+    | '/services/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/services' | '/services/$serviceId'
-  id: '__root__' | '/' | '/dashboard' | '/services' | '/services/$serviceId'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/signup'
+    | '/services/$serviceId'
+    | '/services'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/_auth/login'
+    | '/_auth/signup'
+    | '/services/$serviceId'
+    | '/services/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
-  ServicesRoute: typeof ServicesRouteWithChildren
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthSignupRoute: typeof AuthSignupRoute
+  ServicesServiceIdRoute: typeof ServicesServiceIdRoute
+  ServicesIndexRoute: typeof ServicesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/services': {
-      id: '/services'
-      path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof ServicesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -91,32 +124,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/': {
+      id: '/services/'
+      path: '/services'
+      fullPath: '/services/'
+      preLoaderRoute: typeof ServicesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services/$serviceId': {
       id: '/services/$serviceId'
-      path: '/$serviceId'
+      path: '/services/$serviceId'
       fullPath: '/services/$serviceId'
       preLoaderRoute: typeof ServicesServiceIdRouteImport
-      parentRoute: typeof ServicesRoute
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth/signup': {
+      id: '/_auth/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof AuthSignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface ServicesRouteChildren {
-  ServicesServiceIdRoute: typeof ServicesServiceIdRoute
-}
-
-const ServicesRouteChildren: ServicesRouteChildren = {
-  ServicesServiceIdRoute: ServicesServiceIdRoute,
-}
-
-const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
-  ServicesRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
-  ServicesRoute: ServicesRouteWithChildren,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthSignupRoute: AuthSignupRoute,
+  ServicesServiceIdRoute: ServicesServiceIdRoute,
+  ServicesIndexRoute: ServicesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
