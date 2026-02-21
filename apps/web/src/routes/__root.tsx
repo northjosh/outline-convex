@@ -33,17 +33,8 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 });
 
 function RootComponent() {
-  return (
-    <PostHogProvider
-      apiKey={env.VITE_PUBLIC_POSTHOG_KEY}
-      options={{
-        api_host: "/ingest",
-        ui_host: env.VITE_PUBLIC_POSTHOG_HOST,
-        defaults: "2026-01-30",
-        capture_exceptions: true,
-        debug: import.meta.env.DEV,
-      }}
-    >
+  const content = (
+    <>
       <HeadContent />
       <ThemeProvider
         attribute="class"
@@ -58,6 +49,25 @@ function RootComponent() {
         <Toaster richColors />
       </ThemeProvider>
       <TanStackRouterDevtools position="bottom-left" />
-    </PostHogProvider>
+    </>
   );
+
+  const key = env.VITE_PUBLIC_POSTHOG_KEY;
+  if (key) {
+    return (
+      <PostHogProvider
+        apiKey={key}
+        options={{
+          api_host: "/ingest",
+          ui_host: env.VITE_PUBLIC_POSTHOG_HOST,
+          defaults: "2026-01-30",
+          capture_exceptions: true,
+          debug: import.meta.env.DEV,
+        }}
+      >
+        {content}
+      </PostHogProvider>
+    );
+  }
+  return content;
 }
