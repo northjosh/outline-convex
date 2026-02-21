@@ -512,7 +512,6 @@ export const listActiveServices = query({
   handler: async (ctx, args) => {
     let servicesQuery;
 
-    // Pick the best index based on which filter is provided
     if (args.subject) {
       servicesQuery = ctx.db
         .query("services")
@@ -528,54 +527,63 @@ export const listActiveServices = query({
     }
 
     let services = await servicesQuery.collect();
-
-    // Apply remaining filters in-memory
     services = services.filter((s) => s.isActive);
-
     if (args.subject && args.educationLevel) {
       services = services.filter((s) => s.educationLevel === args.educationLevel);
     }
-
     if (args.serviceCategory) {
       services = services.filter((s) => s.serviceCategory === args.serviceCategory);
     }
 
-    // Enrich with team member info and provider count
-    const enriched = await Promise.all(
-      services.map(async (service) => {
-        let teamMemberInfo = null;
-        if (service.teamMemberId) {
-          const teamProfile = await ctx.db.get(service.teamMemberId);
-          if (teamProfile) {
-            const profile = await ctx.db
-              .query("profiles")
-              .withIndex("by_userId", (q) => q.eq("userId", teamProfile.userId))
-              .unique();
-            if (profile) {
-              teamMemberInfo = {
-                _id: teamProfile._id,
-                fullName: profile.fullName,
-                avatarUrl: profile.avatarUrl,
-                avgRating: teamProfile.avgRating,
-              };
-            }
+    // Batch load team member profiles and user profiles (avoids N+1 and timeout)
+    const teamMemberIds = [
+      ...new Set(services.map((s) => s.teamMemberId).filter(Boolean)),
+    ] as Array<NonNullable<(typeof services)[0]["teamMemberId"]>>;
+    const teamProfiles = await Promise.all(teamMemberIds.map((id) => ctx.db.get(id)));
+    const teamProfileMap = new Map(
+      teamProfiles.filter((p): p is NonNullable<typeof p> => p !== null).map((p) => [p._id, p]),
+    );
+    const userIds = [
+      ...new Set(Array.from(teamProfileMap.values()).flatMap((p) => (p ? [p.userId] : []))),
+    ];
+    const profilesList = await ctx.db.query("profiles").collect();
+    const profileByUserId = new Map(profilesList.map((pr) => [pr.userId, pr]));
+
+    // Batch load provider counts for platform services
+    const platformServiceIdSet = new Set(
+      services.filter((s) => s.ownerType === "platform").map((s) => s._id),
+    );
+    const allAssignments = await ctx.db.query("serviceProviders").collect();
+    const providerCountByServiceId = new Map<string, number>();
+    for (const a of allAssignments) {
+      if (platformServiceIdSet.has(a.serviceId)) {
+        providerCountByServiceId.set(
+          a.serviceId,
+          (providerCountByServiceId.get(a.serviceId) ?? 0) + 1,
+        );
+      }
+    }
+
+    return services.map((service) => {
+      let teamMemberInfo = null;
+      if (service.teamMemberId) {
+        const teamProfile = teamProfileMap.get(service.teamMemberId);
+        if (teamProfile) {
+          const profile = profileByUserId.get(teamProfile.userId);
+          if (profile) {
+            teamMemberInfo = {
+              _id: teamProfile._id,
+              fullName: profile.fullName,
+              avatarUrl: profile.avatarUrl,
+              avgRating: teamProfile.avgRating,
+            };
           }
         }
-
-        let providerCount = 0;
-        if (service.ownerType === "platform") {
-          const providers = await ctx.db
-            .query("serviceProviders")
-            .withIndex("by_serviceId", (q) => q.eq("serviceId", service._id))
-            .collect();
-          providerCount = providers.length;
-        }
-
-        return { ...service, teamMemberInfo, providerCount };
-      }),
-    );
-
-    return enriched;
+      }
+      const providerCount =
+        service.ownerType === "platform" ? (providerCountByServiceId.get(service._id) ?? 0) : 0;
+      return { ...service, teamMemberInfo, providerCount };
+    });
   },
 });
 

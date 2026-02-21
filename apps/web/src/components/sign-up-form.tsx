@@ -1,5 +1,6 @@
 import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
+import { usePostHog } from "posthog-js/react";
 import { toast } from "sonner";
 import z from "zod";
 
@@ -19,6 +20,7 @@ export default function SignUpForm({
   const navigate = useNavigate({
     from: "/",
   });
+  const posthog = usePostHog();
 
   const form = useForm({
     defaultValues: {
@@ -38,6 +40,8 @@ export default function SignUpForm({
             if (onSuccessProp) {
               onSuccessProp();
             } else {
+              posthog.identify(value.email, { email: value.email, name: value.name });
+              posthog.capture("user_signed_up", { email: value.email, name: value.name });
               navigate({
                 to: "/dashboard",
               });
@@ -45,6 +49,9 @@ export default function SignUpForm({
             toast.success("Sign up successful");
           },
           onError: (error) => {
+            posthog.capture("user_sign_up_failed", {
+              error: error.error.message || error.error.statusText,
+            });
             toast.error(error.error.message || error.error.statusText);
           },
         },

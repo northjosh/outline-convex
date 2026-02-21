@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
+import posthog from "posthog-js";
 import { useState } from "react";
 
 import SignInForm from "@/components/sign-in-form";
@@ -9,6 +10,9 @@ import { useCurrentProfile } from "@/hooks/use-current-profile";
 
 export const Route = createFileRoute("/dashboard")({
   component: RouteComponent,
+  onEnter: () => {
+    posthog.capture("dashboard_viewed");
+  },
 });
 
 function DashboardContent() {

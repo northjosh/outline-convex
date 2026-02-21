@@ -8,114 +8,116 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as ServicesRouteImport } from "./routes/services";
-import { Route as DashboardRouteImport } from "./routes/dashboard";
-import { Route as IndexRouteImport } from "./routes/index";
-import { Route as ServicesServiceIdRouteImport } from "./routes/services.$serviceId";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as ServicesServiceIdRouteImport } from './routes/services.$serviceId'
 
 const ServicesRoute = ServicesRouteImport.update({
-  id: "/services",
-  path: "/services",
+  id: '/services',
+  path: '/services',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
-  id: "/dashboard",
-  path: "/dashboard",
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const IndexRoute = IndexRouteImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const ServicesServiceIdRoute = ServicesServiceIdRouteImport.update({
-  id: "/$serviceId",
-  path: "/$serviceId",
+  id: '/$serviceId',
+  path: '/$serviceId',
   getParentRoute: () => ServicesRoute,
-} as any);
+} as any)
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute;
-  "/dashboard": typeof DashboardRoute;
-  "/services": typeof ServicesRouteWithChildren;
-  "/services/$serviceId": typeof ServicesServiceIdRoute;
+  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/services': typeof ServicesRouteWithChildren
+  '/services/$serviceId': typeof ServicesServiceIdRoute
 }
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute;
-  "/dashboard": typeof DashboardRoute;
-  "/services": typeof ServicesRouteWithChildren;
-  "/services/$serviceId": typeof ServicesServiceIdRoute;
+  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/services': typeof ServicesRouteWithChildren
+  '/services/$serviceId': typeof ServicesServiceIdRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  "/": typeof IndexRoute;
-  "/dashboard": typeof DashboardRoute;
-  "/services": typeof ServicesRouteWithChildren;
-  "/services/$serviceId": typeof ServicesServiceIdRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/services': typeof ServicesRouteWithChildren
+  '/services/$serviceId': typeof ServicesServiceIdRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/dashboard" | "/services" | "/services/$serviceId";
-  fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/dashboard" | "/services" | "/services/$serviceId";
-  id: "__root__" | "/" | "/dashboard" | "/services" | "/services/$serviceId";
-  fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/dashboard' | '/services' | '/services/$serviceId'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/dashboard' | '/services' | '/services/$serviceId'
+  id: '__root__' | '/' | '/dashboard' | '/services' | '/services/$serviceId'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  DashboardRoute: typeof DashboardRoute;
-  ServicesRoute: typeof ServicesRouteWithChildren;
+  IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRoute
+  ServicesRoute: typeof ServicesRouteWithChildren
 }
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/services": {
-      id: "/services";
-      path: "/services";
-      fullPath: "/services";
-      preLoaderRoute: typeof ServicesRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/dashboard": {
-      id: "/dashboard";
-      path: "/dashboard";
-      fullPath: "/dashboard";
-      preLoaderRoute: typeof DashboardRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/services/$serviceId": {
-      id: "/services/$serviceId";
-      path: "/$serviceId";
-      fullPath: "/services/$serviceId";
-      preLoaderRoute: typeof ServicesServiceIdRouteImport;
-      parentRoute: typeof ServicesRoute;
-    };
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/$serviceId': {
+      id: '/services/$serviceId'
+      path: '/$serviceId'
+      fullPath: '/services/$serviceId'
+      preLoaderRoute: typeof ServicesServiceIdRouteImport
+      parentRoute: typeof ServicesRoute
+    }
   }
 }
 
 interface ServicesRouteChildren {
-  ServicesServiceIdRoute: typeof ServicesServiceIdRoute;
+  ServicesServiceIdRoute: typeof ServicesServiceIdRoute
 }
 
 const ServicesRouteChildren: ServicesRouteChildren = {
   ServicesServiceIdRoute: ServicesServiceIdRoute,
-};
+}
 
-const ServicesRouteWithChildren = ServicesRoute._addFileChildren(ServicesRouteChildren);
+const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
+  ServicesRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
   ServicesRoute: ServicesRouteWithChildren,
-};
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()

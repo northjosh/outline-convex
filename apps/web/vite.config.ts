@@ -2,32 +2,43 @@ import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import path from "node:path";
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
-export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    tanstackRouter({}),
-    react(),
-    VitePWA({
-      registerType: "autoUpdate",
-      manifest: {
-        name: "outline-convex",
-        short_name: "outline-convex",
-        description: "outline-convex - PWA Application",
-        theme_color: "#0c0c0c",
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+
+  return {
+    plugins: [
+      tailwindcss(),
+      tanstackRouter({}),
+      react(),
+      VitePWA({
+        registerType: "autoUpdate",
+        manifest: {
+          name: "outline-convex",
+          short_name: "outline-convex",
+          description: "outline-convex - PWA Application",
+          theme_color: "#0c0c0c",
+        },
+        pwaAssets: { disabled: false, config: true },
+        devOptions: { enabled: true },
+      }),
+    ],
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
       },
-      pwaAssets: { disabled: false, config: true },
-      devOptions: { enabled: true },
-    }),
-  ],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
     },
-  },
-  server: {
-    port: 3001,
-  },
+    server: {
+      port: 3001,
+      proxy: {
+        "/ingest": {
+          target: env.VITE_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/ingest/, ""),
+        },
+      },
+    },
+  };
 });

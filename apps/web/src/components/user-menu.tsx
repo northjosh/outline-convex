@@ -1,6 +1,7 @@
 import { api } from "@outline-convex/backend/convex/_generated/api";
 import { useNavigate } from "@tanstack/react-router";
 import { useQuery } from "convex/react";
+import { usePostHog } from "posthog-js/react";
 
 import {
   DropdownMenu,
@@ -18,6 +19,7 @@ import { Button } from "./ui/button";
 export default function UserMenu() {
   const navigate = useNavigate();
   const user = useQuery(api.auth.getCurrentUser);
+  const posthog = usePostHog();
 
   return (
     <DropdownMenu>
@@ -30,6 +32,8 @@ export default function UserMenu() {
           <DropdownMenuItem
             variant="destructive"
             onClick={() => {
+              posthog.capture("user_signed_out");
+              posthog.reset();
               authClient.signOut({
                 fetchOptions: {
                   onSuccess: () => {
