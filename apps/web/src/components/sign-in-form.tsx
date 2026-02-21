@@ -35,14 +35,12 @@ export default function SignInForm({
         },
         {
           onSuccess: () => {
+            posthog.identify(value.email);
+            posthog.capture("user_signed_in");
             if (onSuccessProp) {
               onSuccessProp();
             } else {
-              posthog.identify(value.email, { email: value.email });
-              posthog.capture("user_signed_in", { email: value.email });
-              navigate({
-                to: "/dashboard",
-              });
+              navigate({ to: "/dashboard" });
             }
             toast.success("Sign in successful");
           },

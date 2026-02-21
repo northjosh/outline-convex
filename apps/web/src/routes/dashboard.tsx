@@ -15,12 +15,12 @@ export const Route = createFileRoute("/dashboard")({
 function DashboardContent() {
   const { profile, isLoading } = useCurrentProfile();
 
-  if (isLoading) return <div>Loading profile...</div>;
-  if (!profile) return <div>No profile found</div>;
-
   useEffect(() => {
     posthog.capture("dashboard_viewed");
   }, []);
+
+  if (isLoading) return <div>Loading profile...</div>;
+  if (!profile) return <div>No profile found</div>;
 
   return (
     <div className="container mx-auto max-w-3xl px-4 py-8">

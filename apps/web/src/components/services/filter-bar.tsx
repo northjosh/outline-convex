@@ -113,35 +113,38 @@ function FilterPill({
 }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button
-          variant={value ? "default" : "outline"}
-          size="sm"
-          className={cn("shrink-0 gap-1", value && "pr-1.5")}
-        >
-          {value || label}
-          {value && (
-            <span
-              role="button"
-              tabIndex={0}
-              aria-label={`Clear ${label} filter`}
-              onClick={(e) => {
-                e.stopPropagation();
-                onClear();
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
+      <DropdownMenuTrigger
+        render={(props) => (
+          <Button
+            {...props}
+            variant={value ? "default" : "outline"}
+            size="sm"
+            className={cn("shrink-0 gap-1", value && "pr-1.5")}
+          >
+            {value || label}
+            {value && (
+              <span
+                role="button"
+                tabIndex={0}
+                aria-label={`Clear ${label} filter`}
+                onClick={(e) => {
                   e.stopPropagation();
                   onClear();
-                }
-              }}
-              className="hover:bg-primary-foreground/20 ml-0.5 inline-flex items-center justify-center rounded-none p-0.5"
-            >
-              <X className="size-3" />
-            </span>
-          )}
-        </Button>
-      </DropdownMenuTrigger>
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.stopPropagation();
+                    onClear();
+                  }
+                }}
+                className="hover:bg-primary-foreground/20 ml-0.5 inline-flex items-center justify-center rounded-none p-0.5"
+              >
+                <X className="size-3" />
+              </span>
+            )}
+          </Button>
+        )}
+      />
       <DropdownMenuContent className="max-h-60 overflow-y-auto">
         {options.map((option) => (
           <DropdownMenuItem key={option.value} onClick={() => onSelect(option.value)}>
