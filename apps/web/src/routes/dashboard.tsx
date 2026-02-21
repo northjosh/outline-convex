@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
-import { useState } from "react";
+import posthog from "posthog-js";
+import { useEffect, useState } from "react";
 
 import SignInForm from "@/components/sign-in-form";
 import SignUpForm from "@/components/sign-up-form";
@@ -13,6 +14,10 @@ export const Route = createFileRoute("/dashboard")({
 
 function DashboardContent() {
   const { profile, isLoading } = useCurrentProfile();
+
+  useEffect(() => {
+    posthog.capture("dashboard_viewed");
+  }, []);
 
   if (isLoading) return <div>Loading profile...</div>;
   if (!profile) return <div>No profile found</div>;

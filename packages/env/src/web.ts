@@ -6,6 +6,8 @@ export const env = createEnv({
   client: {
     VITE_CONVEX_URL: z.url(),
     VITE_CONVEX_SITE_URL: z.url(),
+    VITE_PUBLIC_POSTHOG_KEY: z.string().optional(),
+    VITE_PUBLIC_POSTHOG_HOST: z.url().optional(),
   },
   runtimeEnv: (import.meta as any).env,
   emptyStringAsUndefined: true,

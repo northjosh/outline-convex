@@ -1,5 +1,6 @@
 import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
+import { usePostHog } from "posthog-js/react";
 import { toast } from "sonner";
 import z from "zod";
 
@@ -9,10 +10,17 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
-export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void }) {
+export default function SignInForm({
+  onSwitchToSignUp,
+  onSuccess: onSuccessProp,
+}: {
+  onSwitchToSignUp: () => void;
+  onSuccess?: () => void;
+}) {
   const navigate = useNavigate({
     from: "/",
   });
+  const posthog = usePostHog();
 
   const form = useForm({
     defaultValues: {
@@ -26,13 +34,22 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
           password: value.password,
         },
         {
-          onSuccess: () => {
-            navigate({
-              to: "/dashboard",
-            });
+          // onSuccess receives SuccessContext: { data, response, request }. API body is in data (e.g. data.user.id).
+          onSuccess: (context) => {
+            const userId = context.data?.user?.id;
+            posthog.identify(userId ?? value.email);
+            posthog.capture("user_signed_in");
+            if (onSuccessProp) {
+              onSuccessProp();
+            } else {
+              navigate({ to: "/dashboard" });
+            }
             toast.success("Sign in successful");
           },
           onError: (error) => {
+            posthog.capture("user_sign_in_failed", {
+              error: error.error.message || error.error.statusText,
+            });
             toast.error(error.error.message || error.error.statusText);
           },
         },

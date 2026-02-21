@@ -1,5 +1,6 @@
 import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
+import { usePostHog } from "posthog-js/react";
 import { toast } from "sonner";
 import z from "zod";
 
@@ -9,10 +10,17 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
-export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () => void }) {
+export default function SignUpForm({
+  onSwitchToSignIn,
+  onSuccess: onSuccessProp,
+}: {
+  onSwitchToSignIn: () => void;
+  onSuccess?: () => void;
+}) {
   const navigate = useNavigate({
     from: "/",
   });
+  const posthog = usePostHog();
 
   const form = useForm({
     defaultValues: {
@@ -28,13 +36,23 @@ export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () 
           name: value.name,
         },
         {
-          onSuccess: () => {
-            navigate({
-              to: "/dashboard",
-            });
+          onSuccess: (ctx) => {
+            if (onSuccessProp) {
+              onSuccessProp();
+            } else {
+              const userId = ctx.data?.user?.id;
+              posthog.identify(userId);
+              posthog.capture("user_signed_up");
+              navigate({
+                to: "/dashboard",
+              });
+            }
             toast.success("Sign up successful");
           },
           onError: (error) => {
+            posthog.capture("user_sign_up_failed", {
+              error: error.error.message || error.error.statusText,
+            });
             toast.error(error.error.message || error.error.statusText);
           },
         },
