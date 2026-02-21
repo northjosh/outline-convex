@@ -9,7 +9,13 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
-export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () => void }) {
+export default function SignUpForm({
+  onSwitchToSignIn,
+  onSuccess: onSuccessProp,
+}: {
+  onSwitchToSignIn: () => void;
+  onSuccess?: () => void;
+}) {
   const navigate = useNavigate({
     from: "/",
   });
@@ -29,9 +35,13 @@ export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () 
         },
         {
           onSuccess: () => {
-            navigate({
-              to: "/dashboard",
-            });
+            if (onSuccessProp) {
+              onSuccessProp();
+            } else {
+              navigate({
+                to: "/dashboard",
+              });
+            }
             toast.success("Sign up successful");
           },
           onError: (error) => {

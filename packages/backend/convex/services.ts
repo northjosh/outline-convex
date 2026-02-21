@@ -1,7 +1,7 @@
 import { v } from "convex/values";
 import type { MutationCtx, QueryCtx } from "./_generated/server";
 import { mutation, query } from "./_generated/server";
-import { requireAuth, requireAdmin, requireTeamMember } from "./lib/auth";
+import { requireAdmin, requireTeamMember } from "./lib/auth";
 
 // ─── Shared Validators ──────────────────────────────────────────────
 
@@ -426,8 +426,6 @@ export const getService = query({
     serviceId: v.id("services"),
   },
   handler: async (ctx, args) => {
-    await requireAuth(ctx);
-
     const service = await ctx.db.get(args.serviceId);
     if (!service || !service.isActive) {
       return null;
@@ -512,8 +510,6 @@ export const listActiveServices = query({
     serviceCategory: v.optional(serviceCategoryValidator),
   },
   handler: async (ctx, args) => {
-    await requireAuth(ctx);
-
     let servicesQuery;
 
     // Pick the best index based on which filter is provided
@@ -544,7 +540,42 @@ export const listActiveServices = query({
       services = services.filter((s) => s.serviceCategory === args.serviceCategory);
     }
 
-    return services;
+    // Enrich with team member info and provider count
+    const enriched = await Promise.all(
+      services.map(async (service) => {
+        let teamMemberInfo = null;
+        if (service.teamMemberId) {
+          const teamProfile = await ctx.db.get(service.teamMemberId);
+          if (teamProfile) {
+            const profile = await ctx.db
+              .query("profiles")
+              .withIndex("by_userId", (q) => q.eq("userId", teamProfile.userId))
+              .unique();
+            if (profile) {
+              teamMemberInfo = {
+                _id: teamProfile._id,
+                fullName: profile.fullName,
+                avatarUrl: profile.avatarUrl,
+                avgRating: teamProfile.avgRating,
+              };
+            }
+          }
+        }
+
+        let providerCount = 0;
+        if (service.ownerType === "platform") {
+          const providers = await ctx.db
+            .query("serviceProviders")
+            .withIndex("by_serviceId", (q) => q.eq("serviceId", service._id))
+            .collect();
+          providerCount = providers.length;
+        }
+
+        return { ...service, teamMemberInfo, providerCount };
+      }),
+    );
+
+    return enriched;
   },
 });
 
@@ -562,8 +593,6 @@ export const listServiceProviders = query({
     serviceId: v.id("services"),
   },
   handler: async (ctx, args) => {
-    await requireAuth(ctx);
-
     const service = await ctx.db.get(args.serviceId);
     if (!service) {
       return [];
