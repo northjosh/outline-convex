@@ -34,8 +34,10 @@ export default function SignInForm({
           password: value.password,
         },
         {
-          onSuccess: () => {
-            posthog.identify(value.email);
+          // onSuccess receives SuccessContext: { data, response, request }. API body is in data (e.g. data.user.id).
+          onSuccess: (context) => {
+            const userId = context.data?.user?.id;
+            posthog.identify(userId ?? value.email);
             posthog.capture("user_signed_in");
             if (onSuccessProp) {
               onSuccessProp();

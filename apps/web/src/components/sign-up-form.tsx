@@ -36,12 +36,13 @@ export default function SignUpForm({
           name: value.name,
         },
         {
-          onSuccess: () => {
+          onSuccess: (ctx) => {
             if (onSuccessProp) {
               onSuccessProp();
             } else {
-              posthog.identify(value.email, { email: value.email, name: value.name });
-              posthog.capture("user_signed_up", { email: value.email, name: value.name });
+              const userId = ctx.data?.user?.id;
+              posthog.identify(userId);
+              posthog.capture("user_signed_up");
               navigate({
                 to: "/dashboard",
               });
