@@ -3,7 +3,8 @@ import {
   SERVICE_CATEGORIES,
   SUBJECTS,
 } from "@outline-convex/backend/convex/lib/constants";
-import { Search, X } from "lucide-react";
+import { Cancel01Icon, Search01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 import { cn } from "@/lib/utils";
 
@@ -46,7 +47,11 @@ export function FilterBar({ filters, onFiltersChange }: FilterBarProps) {
     <div data-slot="filter-bar" className="flex flex-col gap-3">
       {/* Search */}
       <div className="relative">
-        <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2" />
+        <HugeiconsIcon
+          icon={Search01Icon}
+          size={14}
+          className="text-muted-foreground pointer-events-none absolute top-1/2 left-2.5 -translate-y-1/2"
+        />
         <Input
           placeholder="Search services..."
           value={filters.searchQuery}
@@ -90,7 +95,7 @@ export function FilterBar({ filters, onFiltersChange }: FilterBarProps) {
             className="shrink-0 text-muted-foreground"
           >
             Clear all
-            <X className="size-3" />
+            <HugeiconsIcon icon={Cancel01Icon} size={12} />
           </Button>
         )}
       </div>
@@ -137,9 +142,9 @@ function FilterPill({
                     onClear();
                   }
                 }}
-                className="hover:bg-primary-foreground/20 ml-0.5 inline-flex items-center justify-center rounded-none p-0.5"
+                className="hover:bg-primary-foreground/20 ml-0.5 inline-flex items-center justify-center rounded-sm p-0.5"
               >
-                <X className="size-3" />
+                <HugeiconsIcon icon={Cancel01Icon} size={12} />
               </span>
             )}
           </Button>

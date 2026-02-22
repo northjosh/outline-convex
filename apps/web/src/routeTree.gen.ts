@@ -8,161 +8,106 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as ServicesIndexRouteImport } from './routes/services/index'
-import { Route as ServicesServiceIdRouteImport } from './routes/services/$serviceId'
-import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
-import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as rootRouteImport } from "./routes/__root";
+import { Route as DashboardRouteImport } from "./routes/dashboard";
+import { Route as IndexRouteImport } from "./routes/index";
+import { Route as ServicesIndexRouteImport } from "./routes/services/index";
+import { Route as ServicesServiceIdRouteImport } from "./routes/services/$serviceId";
 
 const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+  id: "/dashboard",
+  path: "/dashboard",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ServicesIndexRoute = ServicesIndexRouteImport.update({
-  id: '/services/',
-  path: '/services/',
+  id: "/services/",
+  path: "/services/",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ServicesServiceIdRoute = ServicesServiceIdRouteImport.update({
-  id: '/services/$serviceId',
-  path: '/services/$serviceId',
+  id: "/services/$serviceId",
+  path: "/services/$serviceId",
   getParentRoute: () => rootRouteImport,
-} as any)
-const AuthSignupRoute = AuthSignupRouteImport.update({
-  id: '/_auth/signup',
-  path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthLoginRoute = AuthLoginRouteImport.update({
-  id: '/_auth/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/login': typeof AuthLoginRoute
-  '/signup': typeof AuthSignupRoute
-  '/services/$serviceId': typeof ServicesServiceIdRoute
-  '/services/': typeof ServicesIndexRoute
+  "/": typeof IndexRoute;
+  "/dashboard": typeof DashboardRoute;
+  "/services/$serviceId": typeof ServicesServiceIdRoute;
+  "/services/": typeof ServicesIndexRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/login': typeof AuthLoginRoute
-  '/signup': typeof AuthSignupRoute
-  '/services/$serviceId': typeof ServicesServiceIdRoute
-  '/services': typeof ServicesIndexRoute
+  "/": typeof IndexRoute;
+  "/dashboard": typeof DashboardRoute;
+  "/services/$serviceId": typeof ServicesServiceIdRoute;
+  "/services": typeof ServicesIndexRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/_auth/login': typeof AuthLoginRoute
-  '/_auth/signup': typeof AuthSignupRoute
-  '/services/$serviceId': typeof ServicesServiceIdRoute
-  '/services/': typeof ServicesIndexRoute
+  __root__: typeof rootRouteImport;
+  "/": typeof IndexRoute;
+  "/dashboard": typeof DashboardRoute;
+  "/services/$serviceId": typeof ServicesServiceIdRoute;
+  "/services/": typeof ServicesIndexRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/dashboard'
-    | '/login'
-    | '/signup'
-    | '/services/$serviceId'
-    | '/services/'
-  fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/dashboard'
-    | '/login'
-    | '/signup'
-    | '/services/$serviceId'
-    | '/services'
-  id:
-    | '__root__'
-    | '/'
-    | '/dashboard'
-    | '/_auth/login'
-    | '/_auth/signup'
-    | '/services/$serviceId'
-    | '/services/'
-  fileRoutesById: FileRoutesById
+  fileRoutesByFullPath: FileRoutesByFullPath;
+  fullPaths: "/" | "/dashboard" | "/services/$serviceId" | "/services/";
+  fileRoutesByTo: FileRoutesByTo;
+  to: "/" | "/dashboard" | "/services/$serviceId" | "/services";
+  id: "__root__" | "/" | "/dashboard" | "/services/$serviceId" | "/services/";
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
-  AuthLoginRoute: typeof AuthLoginRoute
-  AuthSignupRoute: typeof AuthSignupRoute
-  ServicesServiceIdRoute: typeof ServicesServiceIdRoute
-  ServicesIndexRoute: typeof ServicesIndexRoute
+  IndexRoute: typeof IndexRoute;
+  DashboardRoute: typeof DashboardRoute;
+  ServicesServiceIdRoute: typeof ServicesServiceIdRoute;
+  ServicesIndexRoute: typeof ServicesIndexRoute;
 }
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/services/': {
-      id: '/services/'
-      path: '/services'
-      fullPath: '/services/'
-      preLoaderRoute: typeof ServicesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/services/$serviceId': {
-      id: '/services/$serviceId'
-      path: '/services/$serviceId'
-      fullPath: '/services/$serviceId'
-      preLoaderRoute: typeof ServicesServiceIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_auth/signup': {
-      id: '/_auth/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof AuthSignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_auth/login': {
-      id: '/_auth/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof AuthLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+    "/dashboard": {
+      id: "/dashboard";
+      path: "/dashboard";
+      fullPath: "/dashboard";
+      preLoaderRoute: typeof DashboardRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/services/": {
+      id: "/services/";
+      path: "/services";
+      fullPath: "/services/";
+      preLoaderRoute: typeof ServicesIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/services/$serviceId": {
+      id: "/services/$serviceId";
+      path: "/services/$serviceId";
+      fullPath: "/services/$serviceId";
+      preLoaderRoute: typeof ServicesServiceIdRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
-  AuthLoginRoute: AuthLoginRoute,
-  AuthSignupRoute: AuthSignupRoute,
   ServicesServiceIdRoute: ServicesServiceIdRoute,
   ServicesIndexRoute: ServicesIndexRoute,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
