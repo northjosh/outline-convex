@@ -13,7 +13,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatPrice } from "@/lib/format";
 
-export const Route = createFileRoute("/services/$serviceId")({
+export const Route = createFileRoute("/_app/services/$serviceId")({
   component: ServiceDetailPage,
 });
 

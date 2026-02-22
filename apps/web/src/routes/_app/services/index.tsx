@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { SearchRemoveIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-export const Route = createFileRoute("/services/")({
+export const Route = createFileRoute("/_app/services/")({
   component: ServicesPage,
 });
 

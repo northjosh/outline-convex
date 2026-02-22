@@ -3,7 +3,6 @@ import { HeadContent, Outlet, createRootRouteWithContext } from "@tanstack/react
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { PostHogProvider } from "posthog-js/react";
 
-import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -16,11 +15,12 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   head: () => ({
     meta: [
       {
-        title: "outline-convex",
+        title: "Syllabi — Academic Excellence in Ghana",
       },
       {
         name: "description",
-        content: "outline-convex is a web application",
+        content:
+          "Connect with Ghana's top educators for WASSCE, Cambridge & GES exam prep. Live tutoring, study materials and expert guidance.",
       },
     ],
     links: [
@@ -42,10 +42,7 @@ function RootComponent() {
         disableTransitionOnChange
         storageKey="vite-ui-theme"
       >
-        <div className="grid grid-rows-[auto_1fr] h-svh">
-          <Header />
-          <Outlet />
-        </div>
+        <Outlet />
         <Toaster richColors />
       </ThemeProvider>
       <TanStackRouterDevtools position="bottom-left" />
