@@ -1,18 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
 import posthog from "posthog-js";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import SignInForm from "@/components/sign-in-form";
-import SignUpForm from "@/components/sign-up-form";
 import UserMenu from "@/components/user-menu";
 import { useCurrentProfile } from "@/hooks/use-current-profile";
 
-export const Route = createFileRoute("/dashboard")({
-  component: RouteComponent,
+export const Route = createFileRoute("/_authed/dashboard")({
+  component: DashboardPage,
 });
 
-function DashboardContent() {
+function DashboardPage() {
   const { profile, isLoading } = useCurrentProfile();
 
   useEffect(() => {
@@ -40,27 +37,5 @@ function DashboardContent() {
         </p>
       </div>
     </div>
-  );
-}
-
-function RouteComponent() {
-  const [showSignIn, setShowSignIn] = useState(false);
-
-  return (
-    <>
-      <Authenticated>
-        <DashboardContent />
-      </Authenticated>
-      <Unauthenticated>
-        {showSignIn ? (
-          <SignInForm onSwitchToSignUp={() => setShowSignIn(false)} />
-        ) : (
-          <SignUpForm onSwitchToSignIn={() => setShowSignIn(true)} />
-        )}
-      </Unauthenticated>
-      <AuthLoading>
-        <div>Loading...</div>
-      </AuthLoading>
-    </>
   );
 }

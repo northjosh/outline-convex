@@ -8,161 +8,317 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as ServicesIndexRouteImport } from './routes/services/index'
-import { Route as ServicesServiceIdRouteImport } from './routes/services/$serviceId'
-import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
-import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as rootRouteImport } from "./routes/__root";
+import { Route as AdminRouteImport } from "./routes/admin";
+import { Route as AuthedRouteImport } from "./routes/_authed";
+import { Route as IndexRouteImport } from "./routes/index";
+import { Route as ServicesIndexRouteImport } from "./routes/services/index";
+import { Route as AdminIndexRouteImport } from "./routes/admin/index";
+import { Route as ServicesServiceIdRouteImport } from "./routes/services/$serviceId";
+import { Route as AdminTeamRouteImport } from "./routes/admin/team";
+import { Route as AdminServicesRouteImport } from "./routes/admin/services";
+import { Route as AuthedProfileRouteImport } from "./routes/_authed/profile";
+import { Route as AuthedDashboardRouteImport } from "./routes/_authed/dashboard";
+import { Route as AuthedBookingsRouteImport } from "./routes/_authed/bookings";
+import { Route as AuthSignupRouteImport } from "./routes/_auth/signup";
+import { Route as AuthLoginRouteImport } from "./routes/_auth/login";
 
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const AdminRoute = AdminRouteImport.update({
+  id: "/admin",
+  path: "/admin",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
+const AuthedRoute = AuthedRouteImport.update({
+  id: "/_authed",
+  getParentRoute: () => rootRouteImport,
+} as any);
 const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ServicesIndexRoute = ServicesIndexRouteImport.update({
-  id: '/services/',
-  path: '/services/',
+  id: "/services/",
+  path: "/services/",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: "/",
+  path: "/",
+  getParentRoute: () => AdminRoute,
+} as any);
 const ServicesServiceIdRoute = ServicesServiceIdRouteImport.update({
-  id: '/services/$serviceId',
-  path: '/services/$serviceId',
+  id: "/services/$serviceId",
+  path: "/services/$serviceId",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
+const AdminTeamRoute = AdminTeamRouteImport.update({
+  id: "/team",
+  path: "/team",
+  getParentRoute: () => AdminRoute,
+} as any);
+const AdminServicesRoute = AdminServicesRouteImport.update({
+  id: "/services",
+  path: "/services",
+  getParentRoute: () => AdminRoute,
+} as any);
+const AuthedProfileRoute = AuthedProfileRouteImport.update({
+  id: "/profile",
+  path: "/profile",
+  getParentRoute: () => AuthedRoute,
+} as any);
+const AuthedDashboardRoute = AuthedDashboardRouteImport.update({
+  id: "/dashboard",
+  path: "/dashboard",
+  getParentRoute: () => AuthedRoute,
+} as any);
+const AuthedBookingsRoute = AuthedBookingsRouteImport.update({
+  id: "/bookings",
+  path: "/bookings",
+  getParentRoute: () => AuthedRoute,
+} as any);
 const AuthSignupRoute = AuthSignupRouteImport.update({
-  id: '/_auth/signup',
-  path: '/signup',
+  id: "/_auth/signup",
+  path: "/signup",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const AuthLoginRoute = AuthLoginRouteImport.update({
-  id: '/_auth/login',
-  path: '/login',
+  id: "/_auth/login",
+  path: "/login",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/login': typeof AuthLoginRoute
-  '/signup': typeof AuthSignupRoute
-  '/services/$serviceId': typeof ServicesServiceIdRoute
-  '/services/': typeof ServicesIndexRoute
+  "/": typeof IndexRoute;
+  "/admin": typeof AdminRouteWithChildren;
+  "/login": typeof AuthLoginRoute;
+  "/signup": typeof AuthSignupRoute;
+  "/bookings": typeof AuthedBookingsRoute;
+  "/dashboard": typeof AuthedDashboardRoute;
+  "/profile": typeof AuthedProfileRoute;
+  "/admin/services": typeof AdminServicesRoute;
+  "/admin/team": typeof AdminTeamRoute;
+  "/services/$serviceId": typeof ServicesServiceIdRoute;
+  "/admin/": typeof AdminIndexRoute;
+  "/services/": typeof ServicesIndexRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/login': typeof AuthLoginRoute
-  '/signup': typeof AuthSignupRoute
-  '/services/$serviceId': typeof ServicesServiceIdRoute
-  '/services': typeof ServicesIndexRoute
+  "/": typeof IndexRoute;
+  "/login": typeof AuthLoginRoute;
+  "/signup": typeof AuthSignupRoute;
+  "/bookings": typeof AuthedBookingsRoute;
+  "/dashboard": typeof AuthedDashboardRoute;
+  "/profile": typeof AuthedProfileRoute;
+  "/admin/services": typeof AdminServicesRoute;
+  "/admin/team": typeof AdminTeamRoute;
+  "/services/$serviceId": typeof ServicesServiceIdRoute;
+  "/admin": typeof AdminIndexRoute;
+  "/services": typeof ServicesIndexRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/_auth/login': typeof AuthLoginRoute
-  '/_auth/signup': typeof AuthSignupRoute
-  '/services/$serviceId': typeof ServicesServiceIdRoute
-  '/services/': typeof ServicesIndexRoute
+  __root__: typeof rootRouteImport;
+  "/": typeof IndexRoute;
+  "/_authed": typeof AuthedRouteWithChildren;
+  "/admin": typeof AdminRouteWithChildren;
+  "/_auth/login": typeof AuthLoginRoute;
+  "/_auth/signup": typeof AuthSignupRoute;
+  "/_authed/bookings": typeof AuthedBookingsRoute;
+  "/_authed/dashboard": typeof AuthedDashboardRoute;
+  "/_authed/profile": typeof AuthedProfileRoute;
+  "/admin/services": typeof AdminServicesRoute;
+  "/admin/team": typeof AdminTeamRoute;
+  "/services/$serviceId": typeof ServicesServiceIdRoute;
+  "/admin/": typeof AdminIndexRoute;
+  "/services/": typeof ServicesIndexRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
-    | '/'
-    | '/dashboard'
-    | '/login'
-    | '/signup'
-    | '/services/$serviceId'
-    | '/services/'
-  fileRoutesByTo: FileRoutesByTo
+    | "/"
+    | "/admin"
+    | "/login"
+    | "/signup"
+    | "/bookings"
+    | "/dashboard"
+    | "/profile"
+    | "/admin/services"
+    | "/admin/team"
+    | "/services/$serviceId"
+    | "/admin/"
+    | "/services/";
+  fileRoutesByTo: FileRoutesByTo;
   to:
-    | '/'
-    | '/dashboard'
-    | '/login'
-    | '/signup'
-    | '/services/$serviceId'
-    | '/services'
+    | "/"
+    | "/login"
+    | "/signup"
+    | "/bookings"
+    | "/dashboard"
+    | "/profile"
+    | "/admin/services"
+    | "/admin/team"
+    | "/services/$serviceId"
+    | "/admin"
+    | "/services";
   id:
-    | '__root__'
-    | '/'
-    | '/dashboard'
-    | '/_auth/login'
-    | '/_auth/signup'
-    | '/services/$serviceId'
-    | '/services/'
-  fileRoutesById: FileRoutesById
+    | "__root__"
+    | "/"
+    | "/_authed"
+    | "/admin"
+    | "/_auth/login"
+    | "/_auth/signup"
+    | "/_authed/bookings"
+    | "/_authed/dashboard"
+    | "/_authed/profile"
+    | "/admin/services"
+    | "/admin/team"
+    | "/services/$serviceId"
+    | "/admin/"
+    | "/services/";
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
-  AuthLoginRoute: typeof AuthLoginRoute
-  AuthSignupRoute: typeof AuthSignupRoute
-  ServicesServiceIdRoute: typeof ServicesServiceIdRoute
-  ServicesIndexRoute: typeof ServicesIndexRoute
+  IndexRoute: typeof IndexRoute;
+  AuthedRoute: typeof AuthedRouteWithChildren;
+  AdminRoute: typeof AdminRouteWithChildren;
+  AuthLoginRoute: typeof AuthLoginRoute;
+  AuthSignupRoute: typeof AuthSignupRoute;
+  ServicesServiceIdRoute: typeof ServicesServiceIdRoute;
+  ServicesIndexRoute: typeof ServicesIndexRoute;
 }
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/services/': {
-      id: '/services/'
-      path: '/services'
-      fullPath: '/services/'
-      preLoaderRoute: typeof ServicesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/services/$serviceId': {
-      id: '/services/$serviceId'
-      path: '/services/$serviceId'
-      fullPath: '/services/$serviceId'
-      preLoaderRoute: typeof ServicesServiceIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_auth/signup': {
-      id: '/_auth/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof AuthSignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_auth/login': {
-      id: '/_auth/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof AuthLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+    "/admin": {
+      id: "/admin";
+      path: "/admin";
+      fullPath: "/admin";
+      preLoaderRoute: typeof AdminRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_authed": {
+      id: "/_authed";
+      path: "";
+      fullPath: "/";
+      preLoaderRoute: typeof AuthedRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/services/": {
+      id: "/services/";
+      path: "/services";
+      fullPath: "/services/";
+      preLoaderRoute: typeof ServicesIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/admin/": {
+      id: "/admin/";
+      path: "/";
+      fullPath: "/admin/";
+      preLoaderRoute: typeof AdminIndexRouteImport;
+      parentRoute: typeof AdminRoute;
+    };
+    "/services/$serviceId": {
+      id: "/services/$serviceId";
+      path: "/services/$serviceId";
+      fullPath: "/services/$serviceId";
+      preLoaderRoute: typeof ServicesServiceIdRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/admin/team": {
+      id: "/admin/team";
+      path: "/team";
+      fullPath: "/admin/team";
+      preLoaderRoute: typeof AdminTeamRouteImport;
+      parentRoute: typeof AdminRoute;
+    };
+    "/admin/services": {
+      id: "/admin/services";
+      path: "/services";
+      fullPath: "/admin/services";
+      preLoaderRoute: typeof AdminServicesRouteImport;
+      parentRoute: typeof AdminRoute;
+    };
+    "/_authed/profile": {
+      id: "/_authed/profile";
+      path: "/profile";
+      fullPath: "/profile";
+      preLoaderRoute: typeof AuthedProfileRouteImport;
+      parentRoute: typeof AuthedRoute;
+    };
+    "/_authed/dashboard": {
+      id: "/_authed/dashboard";
+      path: "/dashboard";
+      fullPath: "/dashboard";
+      preLoaderRoute: typeof AuthedDashboardRouteImport;
+      parentRoute: typeof AuthedRoute;
+    };
+    "/_authed/bookings": {
+      id: "/_authed/bookings";
+      path: "/bookings";
+      fullPath: "/bookings";
+      preLoaderRoute: typeof AuthedBookingsRouteImport;
+      parentRoute: typeof AuthedRoute;
+    };
+    "/_auth/signup": {
+      id: "/_auth/signup";
+      path: "/signup";
+      fullPath: "/signup";
+      preLoaderRoute: typeof AuthSignupRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_auth/login": {
+      id: "/_auth/login";
+      path: "/login";
+      fullPath: "/login";
+      preLoaderRoute: typeof AuthLoginRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
   }
 }
 
+interface AuthedRouteChildren {
+  AuthedBookingsRoute: typeof AuthedBookingsRoute;
+  AuthedDashboardRoute: typeof AuthedDashboardRoute;
+  AuthedProfileRoute: typeof AuthedProfileRoute;
+}
+
+const AuthedRouteChildren: AuthedRouteChildren = {
+  AuthedBookingsRoute: AuthedBookingsRoute,
+  AuthedDashboardRoute: AuthedDashboardRoute,
+  AuthedProfileRoute: AuthedProfileRoute,
+};
+
+const AuthedRouteWithChildren = AuthedRoute._addFileChildren(AuthedRouteChildren);
+
+interface AdminRouteChildren {
+  AdminServicesRoute: typeof AdminServicesRoute;
+  AdminTeamRoute: typeof AdminTeamRoute;
+  AdminIndexRoute: typeof AdminIndexRoute;
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminServicesRoute: AdminServicesRoute,
+  AdminTeamRoute: AdminTeamRoute,
+  AdminIndexRoute: AdminIndexRoute,
+};
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren);
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
+  AuthedRoute: AuthedRouteWithChildren,
+  AdminRoute: AdminRouteWithChildren,
   AuthLoginRoute: AuthLoginRoute,
   AuthSignupRoute: AuthSignupRoute,
   ServicesServiceIdRoute: ServicesServiceIdRoute,
   ServicesIndexRoute: ServicesIndexRoute,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
