@@ -13,6 +13,7 @@ import { Route as AdminRouteImport } from "./routes/admin";
 import { Route as MarketingRouteRouteImport } from "./routes/_marketing/route";
 import { Route as AppRouteRouteImport } from "./routes/_app/route";
 import { Route as AdminIndexRouteImport } from "./routes/admin/index";
+import { Route as MarketingIndexRouteImport } from "./routes/_marketing/index";
 import { Route as AdminTeamRouteImport } from "./routes/admin/team";
 import { Route as AdminServicesRouteImport } from "./routes/admin/services";
 import { Route as AuthSignupRouteImport } from "./routes/_auth/signup";
@@ -41,6 +42,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: "/",
   path: "/",
   getParentRoute: () => AdminRoute,
+} as any);
+const MarketingIndexRoute = MarketingIndexRouteImport.update({
+  id: "/",
+  path: "/",
+  getParentRoute: () => MarketingRouteRoute,
 } as any);
 const AdminTeamRoute = AdminTeamRouteImport.update({
   id: "/team",
@@ -93,7 +99,7 @@ const AppAuthedBookingsRoute = AppAuthedBookingsRouteImport.update({
 } as any);
 
 export interface FileRoutesByFullPath {
-  "/": typeof AppAuthedRouteRouteWithChildren;
+  "/": typeof MarketingIndexRoute;
   "/admin": typeof AdminRouteWithChildren;
   "/login": typeof AuthLoginRoute;
   "/signup": typeof AuthSignupRoute;
@@ -107,7 +113,7 @@ export interface FileRoutesByFullPath {
   "/services/": typeof AppServicesIndexRoute;
 }
 export interface FileRoutesByTo {
-  "/": typeof AppAuthedRouteRouteWithChildren;
+  "/": typeof MarketingIndexRoute;
   "/login": typeof AuthLoginRoute;
   "/signup": typeof AuthSignupRoute;
   "/admin/services": typeof AdminServicesRoute;
@@ -122,13 +128,14 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   "/_app": typeof AppRouteRouteWithChildren;
-  "/_marketing": typeof MarketingRouteRoute;
+  "/_marketing": typeof MarketingRouteRouteWithChildren;
   "/admin": typeof AdminRouteWithChildren;
   "/_app/_authed": typeof AppAuthedRouteRouteWithChildren;
   "/_auth/login": typeof AuthLoginRoute;
   "/_auth/signup": typeof AuthSignupRoute;
   "/admin/services": typeof AdminServicesRoute;
   "/admin/team": typeof AdminTeamRoute;
+  "/_marketing/": typeof MarketingIndexRoute;
   "/admin/": typeof AdminIndexRoute;
   "/_app/_authed/bookings": typeof AppAuthedBookingsRoute;
   "/_app/_authed/dashboard": typeof AppAuthedDashboardRoute;
@@ -174,6 +181,7 @@ export interface FileRouteTypes {
     | "/_auth/signup"
     | "/admin/services"
     | "/admin/team"
+    | "/_marketing/"
     | "/admin/"
     | "/_app/_authed/bookings"
     | "/_app/_authed/dashboard"
@@ -184,7 +192,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren;
-  MarketingRouteRoute: typeof MarketingRouteRoute;
+  MarketingRouteRoute: typeof MarketingRouteRouteWithChildren;
   AdminRoute: typeof AdminRouteWithChildren;
   AuthLoginRoute: typeof AuthLoginRoute;
   AuthSignupRoute: typeof AuthSignupRoute;
@@ -219,6 +227,13 @@ declare module "@tanstack/react-router" {
       fullPath: "/admin/";
       preLoaderRoute: typeof AdminIndexRouteImport;
       parentRoute: typeof AdminRoute;
+    };
+    "/_marketing/": {
+      id: "/_marketing/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof MarketingIndexRouteImport;
+      parentRoute: typeof MarketingRouteRoute;
     };
     "/admin/team": {
       id: "/admin/team";
@@ -323,6 +338,18 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(AppRouteRouteChildren);
 
+interface MarketingRouteRouteChildren {
+  MarketingIndexRoute: typeof MarketingIndexRoute;
+}
+
+const MarketingRouteRouteChildren: MarketingRouteRouteChildren = {
+  MarketingIndexRoute: MarketingIndexRoute,
+};
+
+const MarketingRouteRouteWithChildren = MarketingRouteRoute._addFileChildren(
+  MarketingRouteRouteChildren,
+);
+
 interface AdminRouteChildren {
   AdminServicesRoute: typeof AdminServicesRoute;
   AdminTeamRoute: typeof AdminTeamRoute;
@@ -339,7 +366,7 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren);
 
 const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
-  MarketingRouteRoute: MarketingRouteRoute,
+  MarketingRouteRoute: MarketingRouteRouteWithChildren,
   AdminRoute: AdminRouteWithChildren,
   AuthLoginRoute: AuthLoginRoute,
   AuthSignupRoute: AuthSignupRoute,
