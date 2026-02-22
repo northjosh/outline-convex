@@ -14,7 +14,8 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { RefreshCwIcon } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { RefreshIcon } from "@hugeicons/core-free-icons";
 
 export function Pattern() {
   return (
@@ -33,7 +34,7 @@ export function Pattern() {
               <div className="flex items-center justify-between">
                 <FieldLabel htmlFor="otp-verification">Verification code</FieldLabel>
                 <Button variant="outline" size="xs">
-                  <RefreshCwIcon data-icon="inline-start" />
+                  <HugeiconsIcon icon={RefreshIcon} data-icon="inline-start" size={16} />
                   Resend Code
                 </Button>
               </div>

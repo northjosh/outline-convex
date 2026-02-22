@@ -1,6 +1,7 @@
 import type { Doc, Id } from "@outline-convex/backend/convex/_generated/dataModel";
 
-import { Star, Users } from "lucide-react";
+import { StarIcon, UserGroupIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "@tanstack/react-router";
 
 import { formatPrice } from "@/lib/format";
@@ -28,7 +29,7 @@ export function ServiceCard({
 }) {
   return (
     <Link to="/services/$serviceId" params={{ serviceId: service._id }}>
-      <Card className={cn("transition-colors hover:bg-muted/50 cursor-pointer h-full", className)}>
+      <Card className={cn("hover-lift cursor-pointer h-full", className)}>
         <CardHeader>
           <div className="flex items-start justify-between gap-2">
             <CategoryBadge category={service.serviceCategory} />
@@ -51,20 +52,24 @@ export function ServiceCard({
           <div className="mt-auto pt-2">
             {service.teamMemberInfo ? (
               <div className="flex items-center gap-2 text-xs">
-                <div className="bg-muted flex size-6 items-center justify-center text-[10px] font-medium uppercase">
+                <div className="bg-muted flex size-6 items-center justify-center rounded-full text-[10px] font-medium uppercase">
                   {service.teamMemberInfo.fullName.charAt(0)}
                 </div>
                 <span className="text-foreground truncate">{service.teamMemberInfo.fullName}</span>
                 {service.teamMemberInfo.avgRating > 0 && (
                   <span className="text-muted-foreground ml-auto flex items-center gap-0.5">
-                    <Star className="size-3 fill-amber-400 text-amber-400" />
+                    <HugeiconsIcon
+                      icon={StarIcon}
+                      size={12}
+                      className="fill-amber-400 text-amber-400"
+                    />
                     {service.teamMemberInfo.avgRating.toFixed(1)}
                   </span>
                 )}
               </div>
             ) : service.ownerType === "platform" && service.providerCount > 0 ? (
               <div className="text-muted-foreground flex items-center gap-1 text-xs">
-                <Users className="size-3" />
+                <HugeiconsIcon icon={UserGroupIcon} size={12} />
                 {service.providerCount} educator{service.providerCount !== 1 ? "s" : ""} available
               </div>
             ) : null}

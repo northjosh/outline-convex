@@ -7,7 +7,8 @@ import { FilterBar, type FilterState } from "@/components/services/filter-bar";
 import { ServiceCard } from "@/components/services/service-card";
 import { ServiceCardSkeleton } from "@/components/services/service-card-skeleton";
 import { Button } from "@/components/ui/button";
-import { SearchX } from "lucide-react";
+import { SearchRemoveIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 export const Route = createFileRoute("/services/")({
   component: ServicesPage,
@@ -76,7 +77,11 @@ function ServicesPage() {
 
         {isEmpty && (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <SearchX className="text-muted-foreground mb-4 size-10" />
+            <HugeiconsIcon
+              icon={SearchRemoveIcon}
+              size={40}
+              className="text-muted-foreground mb-4"
+            />
             <h2 className="text-base font-medium">No services found</h2>
             <p className="text-muted-foreground mt-1 text-sm">
               Try adjusting your filters or search terms

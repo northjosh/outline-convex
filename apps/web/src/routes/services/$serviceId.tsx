@@ -3,7 +3,8 @@ import type { Id } from "@outline-convex/backend/convex/_generated/dataModel";
 import { api } from "@outline-convex/backend/convex/_generated/api";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "convex/react";
-import { ArrowLeft, Clock, Star, Users } from "lucide-react";
+import { ArrowLeft01Icon, Clock01Icon, StarIcon, UserGroupIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 import { AuthGateAction } from "@/components/services/auth-gate-action";
 import { CategoryBadge } from "@/components/services/category-badge";
@@ -43,7 +44,7 @@ function ServiceDetailPage() {
         </p>
         <Link to="/services" className="mt-6 inline-block">
           <Button variant="outline" size="sm">
-            <ArrowLeft className="size-3.5" />
+            <HugeiconsIcon icon={ArrowLeft01Icon} size={14} />
             Back to services
           </Button>
         </Link>
@@ -65,7 +66,7 @@ function ServiceDetailPage() {
         to="/services"
         className="text-muted-foreground hover:text-foreground mb-6 inline-flex items-center gap-1 text-xs transition-colors"
       >
-        <ArrowLeft className="size-3" />
+        <HugeiconsIcon icon={ArrowLeft01Icon} size={12} />
         All services
       </Link>
 
@@ -88,12 +89,12 @@ function ServiceDetailPage() {
             <p className="text-lg font-bold">{formatPrice(service.price, service.priceUnit)}</p>
             {service.serviceCategory === "live_session" && service.durationMinutes && (
               <p className="text-muted-foreground mt-0.5 flex items-center gap-1 text-xs">
-                <Clock className="size-3" />
+                <HugeiconsIcon icon={Clock01Icon} size={12} />
                 {service.durationMinutes} min
                 {service.sessionType === "group" && service.maxGroupSize && (
                   <>
                     {" · "}
-                    <Users className="size-3" />
+                    <HugeiconsIcon icon={UserGroupIcon} size={12} />
                     Up to {service.maxGroupSize} students
                   </>
                 )}
@@ -127,7 +128,7 @@ function ServiceDetailPage() {
             {providers.map((provider) => (
               <Card key={provider.teamMemberProfileId} size="sm">
                 <CardContent className="flex items-center gap-3">
-                  <div className="bg-muted flex size-10 items-center justify-center text-sm font-medium uppercase">
+                  <div className="bg-muted flex size-10 items-center justify-center rounded-full text-sm font-medium uppercase">
                     {provider.fullName.charAt(0)}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -139,7 +140,11 @@ function ServiceDetailPage() {
                   </div>
                   {provider.avgRating > 0 && (
                     <div className="flex items-center gap-1 text-xs">
-                      <Star className="size-3 fill-amber-400 text-amber-400" />
+                      <HugeiconsIcon
+                        icon={StarIcon}
+                        size={12}
+                        className="fill-amber-400 text-amber-400"
+                      />
                       {provider.avgRating.toFixed(1)}
                     </div>
                   )}
