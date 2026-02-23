@@ -46,7 +46,7 @@ export function FinalCtaSection() {
             className: "gap-2 px-8 text-base",
           })}
         >
-          Get started — it's free
+          Get started
           <IllustArrowRight size={16} color="#fff" />
         </Link>
       </div>

@@ -1,4 +1,4 @@
-import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "../kibo-ui/marquee";
+import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "@/components/kibo-ui/marquee";
 import { IllustStar, illustrationColors as c } from "./illustrations";
 
 function ReviewCard({
@@ -109,7 +109,7 @@ export function ReviewsSection() {
       <div className="flex gap-4 overflow-x-auto pb-2">
         <Marquee>
           <MarqueeFade side="left" />
-          <MarqueeFade side="right" />
+
           <MarqueeContent>
             {REVIEWS.map((review) => (
               <MarqueeItem key={review.name} className="mx-2 p-2 flex-shrink-0 object-contain">
