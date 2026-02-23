@@ -60,9 +60,9 @@ export function LandingFooter() {
         </span>
         <div className="flex gap-2">
           {[<IconX key="x" />, <IconInstagram key="ig" />, <IconLinkedIn key="li" />].map(
-            (icon) => (
+            (icon, index) => (
               <div
-                key={icon.key}
+                key={index}
                 className="bg-card flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border"
                 style={{
                   borderColor: c.border.default,

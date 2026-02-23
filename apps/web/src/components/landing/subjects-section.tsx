@@ -57,7 +57,7 @@ const SUBJECTS = [
 
 export function SubjectsSection() {
   return (
-    <section className="mx-auto max-w-[1100px] px-6 pb-16">
+    <section id="subjects" className="mx-auto max-w-[1100px] px-6 pb-16">
       <div className="mb-7 text-center">
         <div className="text-[11px] font-semibold tracking-[1.2px] text-amber-700 uppercase mb-2">
           Subjects
