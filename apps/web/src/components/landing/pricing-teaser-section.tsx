@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { IllustArrowRight, IllustWallet } from "./illustrations";
 
 export function PricingTeaserSection() {
@@ -31,16 +31,24 @@ export function PricingTeaserSection() {
         </p>
 
         <div className="flex flex-wrap justify-center gap-3">
-          <Link to="/services">
-            <Button size="lg" className="gap-2">
-              Find an educator
-              <IllustArrowRight size={15} color="#fff" />
-            </Button>
+          <Link
+            to="/services"
+            className={buttonVariants({
+              size: "lg",
+              className: "gap-2",
+            })}
+          >
+            Find an educator
+            <IllustArrowRight size={15} color="#fff" />
           </Link>
-          <Link to="/services">
-            <Button variant="outline" size="lg">
-              See all services
-            </Button>
+          <Link
+            to="/services"
+            className={buttonVariants({
+              variant: "outline",
+              size: "lg",
+            })}
+          >
+            See all services
           </Link>
         </div>
       </div>

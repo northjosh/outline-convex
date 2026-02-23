@@ -1,7 +1,10 @@
 import { IconInstagram, IconLinkedIn, IconX, illustrationColors as c } from "./illustrations";
 
 const FOOTER_COLUMNS = [
-  { title: "Learn", links: ["Subjects", "Educators", "Study Packs", "Pricing"] },
+  {
+    title: "Learn",
+    links: ["Subjects", "Educators", "Study Packs", "Pricing"],
+  },
   { title: "Company", links: ["About", "Careers", "Contact", "Blog"] },
   { title: "Support", links: ["Help Center", "Privacy", "Terms", "Refunds"] },
 ] as const;

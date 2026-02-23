@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   IllustArrowRight,
   IllustGrad,
@@ -40,17 +40,26 @@ export function HeroSection() {
             </p>
 
             <div className="mb-8 flex flex-wrap gap-3">
-              <Link to="/services">
-                <Button size="lg" className="gap-2 px-6 text-[15px]">
-                  Start learning
-                  <IllustArrowRight size={16} color="#fff" />
-                </Button>
+              <Link
+                to="/services"
+                className={buttonVariants({
+                  size: "lg",
+                  className: "gap-2 px-6 text-[15px]",
+                })}
+              >
+                Start learning
+                <IllustArrowRight size={16} color="#fff" />
               </Link>
-              <Link to="/services">
-                <Button variant="outline" size="lg" className="gap-2 px-6 text-[15px]">
-                  <IllustSearch size={18} />
-                  Browse educators
-                </Button>
+              <Link
+                to="/services"
+                className={buttonVariants({
+                  variant: "outline",
+                  size: "lg",
+                  className: "gap-2 px-6 text-[15px]",
+                })}
+              >
+                <IllustSearch size={18} />
+                Browse educators
               </Link>
             </div>
 

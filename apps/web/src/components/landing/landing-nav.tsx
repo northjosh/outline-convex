@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Cancel01Icon, Menu02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { IllustArrowRight, illustrationColors as c } from "./illustrations";
@@ -68,16 +68,24 @@ export function LandingNav() {
             </button>
           ))}
           <div className="mx-1.5 h-5 w-px" style={{ background: c.border.default }} />
-          <Link to="/login">
-            <Button variant="outline" size="sm">
-              Log in
-            </Button>
+          <Link
+            to="/login"
+            className={buttonVariants({
+              variant: "outline",
+              size: "sm",
+            })}
+          >
+            Log in
           </Link>
-          <Link to="/services">
-            <Button size="sm" className="gap-1.5">
-              Start learning
-              <IllustArrowRight size={14} color="#fff" />
-            </Button>
+          <Link
+            to="/services"
+            className={buttonVariants({
+              size: "sm",
+              className: "gap-1.5",
+            })}
+          >
+            Start learning
+            <IllustArrowRight size={14} color="#fff" />
           </Link>
         </div>
 
@@ -110,16 +118,27 @@ export function LandingNav() {
               </button>
             ))}
             <hr className="my-2" style={{ borderColor: "#E8E4E0" }} />
-            <Link to="/login" onClick={() => setMobileOpen(false)}>
-              <Button variant="outline" size="sm" className="w-full">
-                Log in
-              </Button>
+            <Link
+              to="/login"
+              onClick={() => setMobileOpen(false)}
+              className={buttonVariants({
+                variant: "outline",
+                size: "sm",
+                className: "w-full",
+              })}
+            >
+              Log in
             </Link>
-            <Link to="/services" onClick={() => setMobileOpen(false)}>
-              <Button size="sm" className="w-full gap-1.5">
-                Start learning
-                <IllustArrowRight size={14} color="#fff" />
-              </Button>
+            <Link
+              to="/services"
+              onClick={() => setMobileOpen(false)}
+              className={buttonVariants({
+                size: "sm",
+                className: "w-full gap-1.5",
+              })}
+            >
+              Start learning
+              <IllustArrowRight size={14} color="#fff" />
             </Link>
           </div>
         </div>

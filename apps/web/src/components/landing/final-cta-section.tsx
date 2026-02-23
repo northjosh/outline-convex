@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { IllustArrowRight, IllustCTA, illustrationColors as c } from "./illustrations";
 
 export function FinalCtaSection() {
@@ -39,11 +39,15 @@ export function FinalCtaSection() {
           Join thousands of students across Ghana already crushing their WASSCE and Cambridge exams.
         </p>
 
-        <Link to="/services">
-          <Button size="lg" className="gap-2 px-8 text-base">
-            Get started — it's free
-            <IllustArrowRight size={16} color="#fff" />
-          </Button>
+        <Link
+          to="/services"
+          className={buttonVariants({
+            size: "lg",
+            className: "gap-2 px-8 text-base",
+          })}
+        >
+          Get started — it's free
+          <IllustArrowRight size={16} color="#fff" />
         </Link>
       </div>
     </section>

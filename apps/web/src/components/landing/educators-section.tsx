@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { Link } from "@tanstack/react-router";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { IllustArrowRight, IllustStar, illustrationColors as c } from "./illustrations";
 
 function EducatorCard({
@@ -133,11 +133,12 @@ export function EducatorsSection() {
           </div>
           <h2 className="font-display text-[28px] font-bold tracking-tight">Meet the team</h2>
         </div>
-        <Link to="/services">
-          <Button variant="outline" size="sm" className="gap-1.5">
-            View all educators
-            <IllustArrowRight size={14} color={c.text.default} />
-          </Button>
+        <Link
+          to="/services"
+          className={buttonVariants({ variant: "outline", size: "sm", className: "gap-1.5" })}
+        >
+          View all educators
+          <IllustArrowRight size={14} color={c.text.default} />
         </Link>
       </div>
 
