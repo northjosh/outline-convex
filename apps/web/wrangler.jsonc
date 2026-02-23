@@ -1,6 +1,5 @@
 {
   "name": "outline",
-  "main": "worker.js",
   "compatibility_date": "2026-02-19",
   "compatibility_flags": [],
   "assets": {
