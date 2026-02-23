@@ -4,13 +4,9 @@ import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Cancel01Icon, Menu02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { IllustArrowRight, illustrationColors as c } from "./illustrations";
 
-const NAV_LINKS = [
-  { href: "#subjects", label: "Subjects" },
-  { href: "#how-it-works", label: "How It Works" },
-  { href: "#educators", label: "Educators" },
-  { href: "#pricing", label: "Pricing" },
-] as const;
+const NAV_LINKS = ["Subjects", "Educators", "Pricing"] as const;
 
 export function LandingNav() {
   const [scrolled, setScrolled] = useState(false);
@@ -22,9 +18,8 @@ export function LandingNav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = useCallback((href: string) => {
-    const id = href.replace("#", "");
-    const el = document.getElementById(id);
+  const scrollToSection = useCallback((id: string) => {
+    const el = document.getElementById(id.toLowerCase());
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
       setMobileOpen(false);
@@ -33,39 +28,56 @@ export function LandingNav() {
 
   return (
     <nav
-      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-200 ${
-        scrolled ? "bg-background/80 border-b border-border backdrop-blur-md" : "bg-transparent"
-      }`}
+      className="fixed top-0 right-0 left-0 z-50 transition-all duration-200"
+      style={{
+        background: scrolled ? "#FAF8F5E8" : "#FAF8F5",
+        backdropFilter: scrolled ? "blur(12px)" : undefined,
+        borderBottom: `1px solid ${c.border.default}20`,
+      }}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+      <div className="mx-auto flex max-w-[1100px] items-center justify-between px-6 py-3">
         {/* Logo */}
-        <Link to="/" className="font-display text-xl font-bold tracking-tight">
-          Syllabi
+        <Link to="/" className="flex items-center gap-2.5">
+          <div
+            className="font-display flex h-[34px] w-[34px] items-center justify-center rounded-md text-lg font-bold text-white"
+            style={{
+              background: c.accent.base,
+              boxShadow: `0 2px 0 ${c.accent.strong}`,
+            }}
+          >
+            S
+          </div>
+          <span
+            className="font-display text-xl font-bold tracking-tight"
+            style={{ letterSpacing: "-0.02em" }}
+          >
+            Syllabi
+          </span>
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden items-center gap-6 md:flex">
-          {NAV_LINKS.map(({ href, label }) => (
+        <div className="hidden items-center gap-1.5 md:flex">
+          {NAV_LINKS.map((label) => (
             <button
-              key={href}
+              key={label}
               type="button"
-              onClick={() => scrollToSection(href)}
-              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+              onClick={() => scrollToSection(label)}
+              className="text-muted-foreground hover:text-foreground rounded-md px-3 py-1.5 text-sm transition-colors"
             >
               {label}
             </button>
           ))}
-        </div>
-
-        {/* Desktop CTA */}
-        <div className="hidden items-center gap-2 md:flex">
+          <div className="mx-1.5 h-5 w-px" style={{ background: c.border.default }} />
           <Link to="/login">
-            <Button variant="ghost" size="sm">
-              Sign In
+            <Button variant="outline" size="sm">
+              Log in
             </Button>
           </Link>
           <Link to="/services">
-            <Button size="sm">Get Started</Button>
+            <Button size="sm" className="gap-1.5">
+              Start learning
+              <IllustArrowRight size={14} color="#fff" />
+            </Button>
           </Link>
         </div>
 
@@ -82,27 +94,31 @@ export function LandingNav() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="bg-background border-t border-border px-4 pb-4 md:hidden">
-          <div className="flex flex-col gap-2 pt-2">
-            {NAV_LINKS.map(({ href, label }) => (
+        <div
+          className="bg-background border-t px-6 pb-4 md:hidden"
+          style={{ borderColor: "#E8E4E0" }}
+        >
+          <div className="flex flex-col gap-1 pt-2">
+            {NAV_LINKS.map((label) => (
               <button
-                key={href}
+                key={label}
                 type="button"
-                onClick={() => scrollToSection(href)}
+                onClick={() => scrollToSection(label)}
                 className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg px-3 py-2 text-left text-sm transition-colors"
               >
                 {label}
               </button>
             ))}
-            <hr className="border-border my-2" />
+            <hr className="my-2" style={{ borderColor: "#E8E4E0" }} />
             <Link to="/login" onClick={() => setMobileOpen(false)}>
-              <Button variant="ghost" size="sm" className="w-full justify-start">
-                Sign In
+              <Button variant="outline" size="sm" className="w-full">
+                Log in
               </Button>
             </Link>
             <Link to="/services" onClick={() => setMobileOpen(false)}>
-              <Button size="sm" className="w-full">
-                Get Started
+              <Button size="sm" className="w-full gap-1.5">
+                Start learning
+                <IllustArrowRight size={14} color="#fff" />
               </Button>
             </Link>
           </div>

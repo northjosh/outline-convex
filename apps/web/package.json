@@ -33,6 +33,7 @@
     "posthog-js": "^1.352.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-fast-marquee": "^1.6.5",
     "shadcn": "^3.6.2",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",

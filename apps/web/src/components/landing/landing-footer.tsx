@@ -1,77 +1,78 @@
-import { Link } from "@tanstack/react-router";
+import { IconInstagram, IconLinkedIn, IconX, illustrationColors as c } from "./illustrations";
 
-const FOOTER_LINKS = {
-  Platform: [
-    { label: "Browse Services", to: "/services" },
-    { label: "For Educators", href: "#educators" },
-    { label: "Pricing", href: "#pricing" },
-  ],
-  Resources: [
-    { label: "WASSCE Prep", href: "#" },
-    { label: "Cambridge Guide", href: "#" },
-    { label: "Study Tips", href: "#" },
-  ],
-  Support: [
-    { label: "Help Center", href: "#" },
-    { label: "Contact Us", href: "#" },
-    { label: "FAQ", href: "#" },
-  ],
-  Legal: [
-    { label: "Terms of Service", href: "#" },
-    { label: "Privacy Policy", href: "#" },
-    { label: "Cookie Policy", href: "#" },
-  ],
-} as const;
+const FOOTER_COLUMNS = [
+  { title: "Learn", links: ["Subjects", "Educators", "Study Packs", "Pricing"] },
+  { title: "Company", links: ["About", "Careers", "Contact", "Blog"] },
+  { title: "Support", links: ["Help Center", "Privacy", "Terms", "Refunds"] },
+] as const;
 
 export function LandingFooter() {
   return (
-    <footer className="border-t border-border bg-muted/30">
-      <div className="mx-auto max-w-6xl px-4 py-12">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
-          {/* Brand column */}
-          <div className="col-span-2 md:col-span-4 lg:col-span-1">
-            <span className="font-display text-lg font-bold">Syllabi</span>
-            <p className="text-muted-foreground mt-2 text-sm">
-              Connecting Ghanaian students with expert educators for WASSCE & Cambridge success.
-            </p>
-          </div>
-
-          {/* Link columns */}
-          {Object.entries(FOOTER_LINKS).map(([category, links]) => (
-            <div key={category}>
-              <h3 className="text-sm font-semibold">{category}</h3>
-              <ul className="mt-3 flex flex-col gap-2">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    {"to" in link ? (
-                      <Link
-                        to={link.to}
-                        className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-                      >
-                        {link.label}
-                      </Link>
-                    ) : (
-                      <a
-                        href={link.href}
-                        className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-                      >
-                        {link.label}
-                      </a>
-                    )}
-                  </li>
-                ))}
-              </ul>
+    <footer style={{ borderTop: `1px solid ${c.border.default}20` }} className="px-6 py-10">
+      <div className="mx-auto flex max-w-[1100px] flex-wrap items-start justify-between gap-8">
+        {/* Brand */}
+        <div className="max-w-[260px]">
+          <div className="mb-3 flex items-center gap-2">
+            <div
+              className="font-display flex h-7 w-7 items-center justify-center rounded-md text-sm font-bold text-white"
+              style={{
+                background: c.accent.base,
+                boxShadow: `0 2px 0 ${c.accent.strong}`,
+              }}
+            >
+              S
             </div>
-          ))}
+            <span className="font-display text-[17px] font-bold">Syllabi</span>
+          </div>
+          <p className="text-muted-foreground text-[13px] leading-relaxed">
+            Connecting Ghana's best educators with students who want to win.
+          </p>
         </div>
 
-        <hr className="border-border my-8" />
+        {/* Link columns */}
+        {FOOTER_COLUMNS.map((col) => (
+          <div key={col.title}>
+            <div
+              className="mb-3 text-[11px] font-semibold uppercase tracking-[1px]"
+              style={{ color: c.text.subtle }}
+            >
+              {col.title}
+            </div>
+            {col.links.map((link) => (
+              <div
+                key={link}
+                className="text-muted-foreground hover:text-foreground mb-2 cursor-pointer text-[13px] transition-colors"
+              >
+                {link}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
 
-        <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <p className="text-muted-foreground text-xs">
-            &copy; {new Date().getFullYear()} Syllabi. All rights reserved.
-          </p>
-          <p className="text-muted-foreground text-xs">Made with ❤️ in Ghana 🇬🇭</p>
+      {/* Bottom bar */}
+      <div
+        className="mx-auto mt-6 flex max-w-[1100px] flex-wrap items-center justify-between gap-3 pt-5"
+        style={{ borderTop: `1px solid ${c.border.default}20` }}
+      >
+        <span className="text-xs" style={{ color: c.text.faint }}>
+          © 2026 Syllabi. Made in Ghana
+        </span>
+        <div className="flex gap-2">
+          {[<IconX key="x" />, <IconInstagram key="ig" />, <IconLinkedIn key="li" />].map(
+            (icon) => (
+              <div
+                key={icon.key}
+                className="bg-card flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border"
+                style={{
+                  borderColor: c.border.default,
+                  boxShadow: "0 2px 0 #C4C0B8",
+                }}
+              >
+                {icon}
+              </div>
+            ),
+          )}
         </div>
       </div>
     </footer>

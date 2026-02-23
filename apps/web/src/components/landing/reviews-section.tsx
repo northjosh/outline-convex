@@ -1,85 +1,123 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { StarIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "../kibo-ui/marquee";
+import { IllustStar, illustrationColors as c } from "./illustrations";
 
-interface Review {
-  quote: string;
+function ReviewCard({
+  name,
+  text,
+  rating,
+  subject,
+  avatar,
+  color,
+}: {
   name: string;
-  exam: string;
+  text: string;
   rating: number;
-}
-
-const REVIEWS: Review[] = [
-  {
-    quote:
-      "Syllabi helped me go from a D7 to a B3 in Mathematics. My tutor, Madam Akua, made everything click. I couldn't have done it without this platform.",
-    name: "Kwesi Appiah",
-    exam: "WASSCE 2025",
-    rating: 5,
-  },
-  {
-    quote:
-      "The digital past questions and solutions were a game-changer for my Cambridge revision. Well organized and easy to follow.",
-    name: "Abena Sarpong",
-    exam: "Cambridge A-Level",
-    rating: 5,
-  },
-  {
-    quote:
-      "I was struggling with Integrated Science until I found Mr. Kofi on Syllabi. The live sessions are interactive and the scheduling is super flexible.",
-    name: "Yaw Mensah",
-    exam: "WASSCE 2025",
-    rating: 4,
-  },
-  {
-    quote:
-      "As a parent, I appreciate how easy it is to find qualified tutors. The ratings and reviews give me confidence in the educators my children work with.",
-    name: "Efua Darkwa",
-    exam: "Parent",
-    rating: 5,
-  },
-];
-
-function Stars({ count }: { count: number }) {
+  subject: string;
+  avatar: string;
+  color: string;
+}) {
   return (
-    <div className="flex gap-0.5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <HugeiconsIcon
-          key={i}
-          icon={StarIcon}
-          size={14}
-          className={i < count ? "fill-amber-400 text-amber-400" : "text-border"}
-        />
-      ))}
+    <div
+      className="bg-card flex-[0_0_auto] rounded-xl border p-[16px] w-[400px]"
+      style={{
+        minWidth: 260,
+        borderColor: "#E8E4E0",
+        boxShadow: "0 4px 0 #E0DCD6",
+      }}
+    >
+      {/* Stars */}
+      <div className="mb-2.5 flex gap-0.5">
+        {Array.from({ length: 5 }, (_, i) => (
+          <IllustStar key={i} size={14} color={i < rating ? c.accent.base : c.border.default} />
+        ))}
+      </div>
+
+      {/* Quote */}
+      <p
+        className="mb-4 text-[13px] italic leading-relaxed line-clamp-2"
+        style={{ color: c.text.default }}
+      >
+        &ldquo;{text}&rdquo;
+      </p>
+
+      {/* Author */}
+      <div className="flex items-center gap-2.5">
+        <div
+          className="flex h-8 w-8 items-center justify-center rounded-full text-[13px] font-semibold text-white"
+          style={{ background: color }}
+        >
+          {avatar}
+        </div>
+        <div>
+          <div className="text-[13px] font-semibold">{name}</div>
+          <div className="text-[11px]" style={{ color: c.text.subtle }}>
+            {subject}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
+const REVIEWS = [
+  {
+    name: "Abena K.",
+    text: "Mr. Mensah made integration click for me in one session. I went from a D7 to a B3 in two months.",
+    rating: 5,
+    subject: "WASSCE Mathematics",
+    avatar: "A",
+    color: c.accent.base,
+  },
+  {
+    name: "Kofi A.",
+    text: "The past questions pack was exactly what I needed. Detailed solutions — not just answers. The past questions pack was exactly what I needed. Detailed solutions — not just answers. I have a lot of questions.",
+    rating: 5,
+    subject: "Cambridge Chemistry",
+    avatar: "K",
+    color: c.info.base,
+  },
+  {
+    name: "Esi M.",
+    text: "Madam Efua's essay clinic changed my writing completely. She doesn't just correct — she teaches you why.",
+    rating: 5,
+    subject: "WASSCE English",
+    avatar: "E",
+    color: c.purple.base,
+  },
+  {
+    name: "Yaw B.",
+    text: "Being able to pay with MoMo makes this so easy. No credit card drama.",
+    rating: 4,
+    subject: "WASSCE Physics",
+    avatar: "Y",
+    color: c.success.base,
+  },
+] as const;
+
 export function ReviewsSection() {
   return (
-    <section className="py-16 md:py-24">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="mb-12 text-center">
-          <h2 className="font-display text-3xl font-bold md:text-4xl">What Students Say</h2>
-          <p className="mt-3 text-muted-foreground">Real stories from real students and parents</p>
+    <section className="mx-auto max-w-[1100px] px-6 pb-[72px]">
+      <div className="mb-7 text-center">
+        <div className="mb-2 text-[11px] font-semibold tracking-[1.2px] text-amber-700 uppercase">
+          Reviews
         </div>
+        <h2 className="font-display text-[28px] font-bold tracking-tight">
+          Students talk. We listen.
+        </h2>
+      </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          {REVIEWS.map((review) => (
-            <Card key={review.name}>
-              <CardContent className="flex flex-col gap-3">
-                <Stars count={review.rating} />
-                <p className="text-foreground/90 text-sm leading-relaxed">
-                  &ldquo;{review.quote}&rdquo;
-                </p>
-                <div className="mt-auto">
-                  <p className="text-sm font-medium">{review.name}</p>
-                  <p className="text-muted-foreground text-xs">{review.exam}</p>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+      <div className="flex gap-4 overflow-x-auto pb-2">
+        <Marquee>
+          <MarqueeFade side="left" />
+          <MarqueeFade side="right" />
+          <MarqueeContent>
+            {REVIEWS.map((review) => (
+              <MarqueeItem key={review.name} className="mx-2 p-2 flex-shrink-0 object-contain">
+                <ReviewCard {...review} />
+              </MarqueeItem>
+            ))}
+          </MarqueeContent>
+        </Marquee>
       </div>
     </section>
   );

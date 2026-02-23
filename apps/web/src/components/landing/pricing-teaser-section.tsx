@@ -1,33 +1,48 @@
 import { Link } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
+import { IllustArrowRight, IllustWallet } from "./illustrations";
 
 export function PricingTeaserSection() {
   return (
-    <section id="pricing" className="border-y border-border bg-muted/30 py-16 md:py-24">
-      <div className="mx-auto max-w-3xl px-4 text-center">
-        <h2 className="font-display text-3xl font-bold md:text-4xl">Affordable Learning</h2>
-        <p className="text-muted-foreground mt-3">Quality education that fits your budget</p>
-
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-6">
-          <div className="card-depth rounded-xl border border-border bg-card p-6">
-            <p className="text-muted-foreground text-sm">Live Sessions from</p>
-            <p className="font-display mt-1 text-3xl font-bold">GH₵ 20</p>
-            <p className="text-muted-foreground mt-1 text-xs">per session</p>
-          </div>
-          <div className="card-depth rounded-xl border border-border bg-card p-6">
-            <p className="text-muted-foreground text-sm">Study Materials from</p>
-            <p className="font-display mt-1 text-3xl font-bold">GH₵ 5</p>
-            <p className="text-muted-foreground mt-1 text-xs">per download</p>
-          </div>
+    <section id="pricing" className="mx-auto max-w-[1100px] px-6 pb-[72px]">
+      <div
+        className="bg-card rounded-xl border p-10 text-center"
+        style={{
+          borderColor: "#E8E4E0",
+          boxShadow: "0 4px 0 #E0DCD6",
+        }}
+      >
+        <div className="mb-4 flex justify-center">
+          <IllustWallet size={56} />
         </div>
 
-        <p className="text-muted-foreground mt-6 text-sm">
-          Pay securely with MTN MoMo, Vodafone Cash, or card
+        <h2 className="font-display mb-2 text-2xl font-bold tracking-tight">
+          Transparent pricing. No surprises.
+        </h2>
+
+        <p className="text-muted-foreground mx-auto mb-2 max-w-[480px] text-sm leading-relaxed">
+          Sessions start from <strong className="text-foreground">GH₵ 50/hr</strong>. Pay per
+          session — no subscriptions, no commitments. Just results.
         </p>
-        <Link to="/services" className="mt-4 inline-block">
-          <Button size="lg">Browse Services</Button>
-        </Link>
+
+        <p className="text-muted-foreground mb-6 text-[13px]" style={{ color: "#9A9590" }}>
+          MTN MoMo · Vodafone Cash · Visa · Mastercard
+        </p>
+
+        <div className="flex flex-wrap justify-center gap-3">
+          <Link to="/services">
+            <Button size="lg" className="gap-2">
+              Find an educator
+              <IllustArrowRight size={15} color="#fff" />
+            </Button>
+          </Link>
+          <Link to="/services">
+            <Button variant="outline" size="lg">
+              See all services
+            </Button>
+          </Link>
+        </div>
       </div>
     </section>
   );

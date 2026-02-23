@@ -1,33 +1,50 @@
 import { Link } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
+import { IllustArrowRight, IllustCTA, illustrationColors as c } from "./illustrations";
 
 export function FinalCtaSection() {
   return (
-    <section className="py-16 md:py-24">
-      <div className="mx-auto max-w-4xl px-4">
-        <div className="bg-primary text-primary-foreground rounded-2xl px-6 py-12 text-center md:px-12 md:py-16">
-          <h2 className="font-display text-3xl font-bold md:text-4xl">Start Learning Today</h2>
-          <p className="mx-auto mt-3 max-w-lg opacity-90">
-            Join thousands of Ghanaian students already achieving their academic goals with Syllabi.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link to="/services">
-              <Button size="lg" variant="secondary" className="px-6 text-base">
-                Browse Services
-              </Button>
-            </Link>
-            <Link to="/signup">
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10 px-6 text-base"
-              >
-                Create Account
-              </Button>
-            </Link>
-          </div>
+    <section className="mx-auto max-w-[1100px] px-6 pb-20">
+      <div
+        className="relative overflow-hidden rounded-xl px-8 py-14 text-center"
+        style={{
+          background: c.text.primary,
+          boxShadow: "0 6px 0 #0D0B08",
+        }}
+      >
+        {/* Gradient top bar */}
+        <div
+          className="absolute top-0 right-0 left-0 h-1"
+          style={{
+            background: `linear-gradient(90deg, ${c.accent.base}, ${c.info.base}, ${c.purple.base}, ${c.success.base})`,
+          }}
+        />
+
+        <div className="mb-5 flex justify-center">
+          <IllustCTA size={240} />
         </div>
+
+        <h2
+          className="font-display mb-3 font-extrabold tracking-tight text-white"
+          style={{ fontSize: "clamp(24px, 4vw, 36px)", lineHeight: 1.15 }}
+        >
+          Your future self will thank you.
+        </h2>
+
+        <p
+          className="mx-auto mb-7 max-w-[440px] text-[15px] leading-relaxed"
+          style={{ color: "#ffffff90" }}
+        >
+          Join thousands of students across Ghana already crushing their WASSCE and Cambridge exams.
+        </p>
+
+        <Link to="/services">
+          <Button size="lg" className="gap-2 px-8 text-base">
+            Get started — it's free
+            <IllustArrowRight size={16} color="#fff" />
+          </Button>
+        </Link>
       </div>
     </section>
   );

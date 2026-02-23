@@ -1,53 +1,63 @@
-import { IllustCalendar, IllustLearn, IllustSearch } from "./illustrations";
+import type { ReactNode } from "react";
 
-const STEPS = [
-  {
-    number: 1,
-    title: "Search & Discover",
-    description:
-      "Browse our curated catalog of educators and services. Filter by subject, level, and type to find exactly what you need.",
-    Illustration: IllustSearch,
-  },
-  {
-    number: 2,
-    title: "Book & Schedule",
-    description:
-      "Choose your preferred time slot and pay securely via MTN MoMo or card. Instant confirmation, no hassle.",
-    Illustration: IllustCalendar,
-  },
-  {
-    number: 3,
-    title: "Learn & Excel",
-    description:
-      "Join live sessions, access digital materials, or get personalized help. Track your progress and ace your exams.",
-    Illustration: IllustLearn,
-  },
-] as const;
+import { IllustCalendar, IllustRocket, IllustSearch } from "./illustrations";
+
+function StepCard({
+  number,
+  icon,
+  title,
+  description,
+}: {
+  number: string;
+  icon: ReactNode;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="card-depth bg-card border-border flex min-w-[200px] flex-1 flex-col rounded-xl border px-[22px] py-6">
+      <div className="mb-3.5 flex items-center gap-2.5">
+        <div className="flex items-center justify-center">{icon}</div>
+        <span className="text-muted-foreground/60 text-[11px] font-bold tracking-[1.5px] uppercase">
+          Step {number}
+        </span>
+      </div>
+      <h3 className="mb-1.5 text-base font-semibold">{title}</h3>
+      <p className="text-muted-foreground text-[13px] leading-[1.55]">{description}</p>
+    </div>
+  );
+}
 
 export function HowItWorksSection() {
   return (
-    <section id="how-it-works" className="border-y border-border bg-muted/30 py-16 md:py-24">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="mb-12 text-center">
-          <h2 className="font-display text-3xl font-bold md:text-4xl">How It Works</h2>
-          <p className="mt-3 text-muted-foreground">Get started in three simple steps</p>
+    <section className="mx-auto max-w-[1100px] px-6 pb-[72px]">
+      <div className="mb-8 text-center">
+        <div className="text-[11px] font-semibold tracking-[1.2px] text-amber-700 uppercase mb-2">
+          How it works
         </div>
+        <h2 className="font-display text-[28px] font-bold tracking-tight">
+          Three taps to your next A
+        </h2>
+      </div>
 
-        <div className="grid gap-8 md:grid-cols-3">
-          {STEPS.map(({ number, title, description, Illustration }) => (
-            <div
-              key={number}
-              className="card-depth flex flex-col items-center rounded-xl border border-border bg-card p-6 text-center"
-            >
-              <div className="bg-primary text-primary-foreground font-display mb-4 flex size-10 items-center justify-center rounded-full text-lg font-bold">
-                {number}
-              </div>
-              <Illustration className="mb-4 h-32 w-full dark:opacity-90" />
-              <h3 className="text-base font-semibold">{title}</h3>
-              <p className="text-muted-foreground mt-2 text-sm leading-relaxed">{description}</p>
-            </div>
-          ))}
-        </div>
+      <div className="flex flex-wrap gap-4">
+        <StepCard
+          number="1"
+          icon={<IllustSearch size={40} />}
+          title="Find your match"
+          description="Browse educators by subject and level. See their ratings, experience, and availability in real time."
+        />
+        <StepCard
+          number="2"
+          icon={<IllustCalendar size={40} />}
+          title="Book & pay instantly"
+          description="Pick a time that works, pay with MoMo or card. Confirmation hits your phone in seconds."
+        />
+        <StepCard
+          number="3"
+          icon={<IllustRocket size={40} />}
+          title="Level up"
+          description="Join your session on Zoom or meet in person. Rate your educator after — help the community."
+        />
       </div>
     </section>
   );

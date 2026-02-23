@@ -1,19 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
-interface StatItem {
-  value: number;
-  suffix: string;
-  label: string;
-}
+import { IllustCheck, IllustGrad, IllustStar, IllustUsers } from "./illustrations";
 
-const STATS: StatItem[] = [
-  { value: 5000, suffix: "+", label: "Students Learning" },
-  { value: 200, suffix: "+", label: "Expert Educators" },
-  { value: 15, suffix: "+", label: "Subjects Covered" },
-  { value: 4.8, suffix: "★", label: "Average Rating" },
-];
-
-function Counter({ value, suffix }: { value: number; suffix: string }) {
+function Counter({ end, suffix = "" }: { end: number; suffix?: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const hasAnimated = useRef(false);
@@ -28,15 +17,12 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
           hasAnimated.current = true;
           const duration = 2000;
           const start = performance.now();
-          const isFloat = value % 1 !== 0;
 
           const animate = (now: number) => {
             const elapsed = now - start;
             const progress = Math.min(elapsed / duration, 1);
-            // Ease out cubic
             const eased = 1 - (1 - progress) ** 3;
-            const current = eased * value;
-            setCount(isFloat ? Math.round(current * 10) / 10 : Math.floor(current));
+            setCount(Math.floor(eased * end));
             if (progress < 1) requestAnimationFrame(animate);
           };
           requestAnimationFrame(animate);
@@ -47,30 +33,60 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [value]);
-
-  const display = value % 1 !== 0 ? count.toFixed(1) : count.toLocaleString();
+  }, [end]);
 
   return (
-    <span ref={ref} className="font-display text-3xl font-bold md:text-4xl">
-      {display}
+    <span ref={ref}>
+      {count.toLocaleString()}
       {suffix}
     </span>
   );
 }
 
+const STATS = [
+  {
+    value: 2400,
+    suffix: "+",
+    label: "Students",
+    icon: <IllustUsers size={18} color="#D08A18" />,
+  },
+  {
+    value: 35,
+    suffix: "",
+    label: "Expert educators",
+    icon: <IllustGrad size={18} />,
+  },
+  {
+    value: 12000,
+    suffix: "+",
+    label: "Sessions completed",
+    icon: <IllustCheck size={18} color="#D08A18" />,
+  },
+  {
+    value: 4.8,
+    suffix: "",
+    label: "Average rating",
+    icon: <IllustStar size={18} />,
+    decimal: true,
+  },
+] as const;
+
 export function StatsBar() {
   return (
-    <section className="border-y border-border bg-muted/30 py-10">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          {STATS.map((stat) => (
-            <div key={stat.label} className="flex flex-col items-center gap-1 text-center">
-              <Counter value={stat.value} suffix={stat.suffix} />
-              <span className="text-muted-foreground text-sm">{stat.label}</span>
+    <section className="mx-auto mb-16 max-w-[1100px] px-6">
+      <div className="card-depth bg-card border-border flex flex-wrap justify-center overflow-hidden rounded-xl border">
+        {STATS.map((stat, i) => (
+          <div
+            key={stat.label}
+            className={`border-border flex min-w-[160px] flex-1 flex-col items-center gap-0.5 px-5 py-[22px] text-center${i < 3 ? " border-r" : ""}`}
+          >
+            <span className="mb-1.5 flex justify-center">{stat.icon}</span>
+            <div className="font-display text-[28px] font-bold">
+              {"decimal" in stat ? stat.value : <Counter end={stat.value} suffix={stat.suffix} />}
             </div>
-          ))}
-        </div>
+            <div className="text-muted-foreground mt-0.5 text-xs">{stat.label}</div>
+          </div>
+        ))}
       </div>
     </section>
   );
