@@ -1,20 +1,30 @@
 import { createFileRoute } from "@tanstack/react-router";
+import posthog from "posthog-js";
+import { useEffect } from "react";
 
+import UserMenu from "@/components/user-menu";
 import { useCurrentProfile } from "@/hooks/use-current-profile";
 
-export const Route = createFileRoute("/_authed/profile")({
-  component: ProfilePage,
+export const Route = createFileRoute("/_app/_authed/dashboard")({
+  component: DashboardPage,
 });
 
-function ProfilePage() {
+function DashboardPage() {
   const { profile, isLoading } = useCurrentProfile();
+
+  useEffect(() => {
+    posthog.capture("dashboard_viewed");
+  }, []);
 
   if (isLoading) return <div>Loading profile...</div>;
   if (!profile) return <div>No profile found</div>;
 
   return (
     <div className="container mx-auto max-w-3xl px-4 py-8">
-      <h1 className="mb-6 text-2xl font-bold">Profile</h1>
+      <div className="mb-6 flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <UserMenu />
+      </div>
       <div className="space-y-2 rounded-lg border p-4">
         <p>
           <strong>Name:</strong> {profile.fullName}
@@ -26,7 +36,6 @@ function ProfilePage() {
           <strong>Role:</strong> {profile.role}
         </p>
       </div>
-      <p className="mt-4 text-sm text-muted-foreground">Profile editing coming soon.</p>
     </div>
   );
 }

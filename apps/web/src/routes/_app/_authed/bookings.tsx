@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { useCurrentProfile } from "@/hooks/use-current-profile";
 
-export const Route = createFileRoute("/_authed/bookings")({
+export const Route = createFileRoute("/_app/_authed/bookings")({
   component: BookingsPage,
 });
 
