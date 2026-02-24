@@ -6,12 +6,13 @@ import { ModeToggle } from "./mode-toggle";
 import UserMenu from "./user-menu";
 
 export default function Header() {
-  const { isAuthenticated, isAdmin } = useCurrentProfile();
+  const { isAuthenticated, isAdmin, isTeamMember, isLearner } = useCurrentProfile();
 
   const links = [
     { to: "/", label: "Home", show: true },
     { to: "/services", label: "Services", show: true },
-    { to: "/dashboard", label: "Dashboard", show: isAuthenticated },
+    { to: "/dashboard", label: "Dashboard", show: isLearner },
+    { to: "/educator", label: "Dashboard", show: isTeamMember },
     { to: "/admin", label: "Admin", show: isAdmin },
   ] as const;
 
@@ -30,7 +31,7 @@ export default function Header() {
             })}
         </nav>
         <div className="flex items-center gap-2">
-          <ModeToggle />
+          {/* <ModeToggle /> */}
           {isAuthenticated ? (
             <UserMenu />
           ) : (

@@ -1,5 +1,6 @@
-import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
+import { Link, Outlet, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
+import { useEffect } from "react";
 
 import AdminSidebar from "@/components/admin-sidebar";
 import { useCurrentProfile } from "@/hooks/use-current-profile";
@@ -8,8 +9,18 @@ export const Route = createFileRoute("/admin")({
   component: AdminLayout,
 });
 
+function RedirectToAdminLogin() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate({ to: "/admin/login" });
+  }, [navigate]);
+
+  return null;
+}
+
 function AdminContent() {
-  const { isAdmin, isLoading } = useCurrentProfile();
+  const { isAdmin, isLearner, isTeamMember, isLoading } = useCurrentProfile();
 
   if (isLoading) {
     return (
@@ -19,13 +30,25 @@ function AdminContent() {
     );
   }
 
-  if (!isAdmin) {
+  if (isLearner) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-4">
         <h1 className="text-2xl font-bold">Access Denied</h1>
         <p className="text-muted-foreground">You don't have permission to access this area.</p>
         <Link to="/dashboard" className="text-sm underline">
           Go to Dashboard
+        </Link>
+      </div>
+    );
+  }
+
+  if (isTeamMember) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center gap-4">
+        <h1 className="text-2xl font-bold">Access Denied</h1>
+        <p className="text-muted-foreground">You don't have permission to access this area.</p>
+        <Link to="/educator" className="text-sm underline">
+          Go to Educator Dashboard
         </Link>
       </div>
     );
@@ -48,13 +71,7 @@ function AdminLayout() {
         <AdminContent />
       </Authenticated>
       <Unauthenticated>
-        <div className="flex h-full flex-col items-center justify-center gap-4">
-          <h1 className="text-2xl font-bold">Access Denied</h1>
-          <p className="text-muted-foreground">Please sign in to access this area.</p>
-          <Link to="/login" className="text-sm underline">
-            Sign In
-          </Link>
-        </div>
+        <RedirectToAdminLogin />
       </Unauthenticated>
       <AuthLoading>
         <div className="flex h-full items-center justify-center">

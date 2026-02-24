@@ -5,7 +5,7 @@ import { config } from "dotenv";
 config({ path: "./.env" });
 config({ path: "../../apps/web/.env" });
 
-const app = await alchemy("outline-convex");
+const app = await alchemy("outline");
 
 export const web = await Vite("web", {
   cwd: "../../apps/web",
