@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { SearchRemoveIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-export const Route = createFileRoute("/_app/services/")({
+export const Route = createFileRoute("/_marketing/services/")({
   component: ServicesPage,
 });
 
@@ -56,7 +56,7 @@ function ServicesPage() {
     !!filters.searchQuery.trim();
 
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-6">
+    <div className="mt-12 container mx-auto max-w-5xl px-4 py-6">
       <div className="mb-6">
         <h1 className="text-xl font-bold">Browse Services</h1>
         <p className="text-muted-foreground text-sm mt-1">

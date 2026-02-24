@@ -8,371 +8,522 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as AdminRouteImport } from './routes/admin'
-import { Route as MarketingRouteRouteImport } from './routes/_marketing/route'
-import { Route as AppRouteRouteImport } from './routes/_app/route'
-import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as MarketingIndexRouteImport } from './routes/_marketing/index'
-import { Route as AdminTeamRouteImport } from './routes/admin/team'
-import { Route as AdminServicesRouteImport } from './routes/admin/services'
-import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
-import { Route as AuthLoginRouteImport } from './routes/_auth/login'
-import { Route as AppAuthedRouteRouteImport } from './routes/_app/_authed/route'
-import { Route as AppServicesIndexRouteImport } from './routes/_app/services/index'
-import { Route as AppServicesServiceIdRouteImport } from './routes/_app/services/$serviceId'
-import { Route as AppAuthedProfileRouteImport } from './routes/_app/_authed/profile'
-import { Route as AppAuthedDashboardRouteImport } from './routes/_app/_authed/dashboard'
-import { Route as AppAuthedBookingsRouteImport } from './routes/_app/_authed/bookings'
+import { Route as rootRouteImport } from "./routes/__root";
+import { Route as EducatorRouteRouteImport } from "./routes/educator/route";
+import { Route as AdminRouteRouteImport } from "./routes/admin/route";
+import { Route as MarketingRouteRouteImport } from "./routes/_marketing/route";
+import { Route as LearnerRouteRouteImport } from "./routes/_learner/route";
+import { Route as AuthRouteRouteImport } from "./routes/_auth/route";
+import { Route as EducatorIndexRouteImport } from "./routes/educator/index";
+import { Route as AdminIndexRouteImport } from "./routes/admin/index";
+import { Route as MarketingIndexRouteImport } from "./routes/_marketing/index";
+import { Route as EducatorScheduleRouteImport } from "./routes/educator/schedule";
+import { Route as EducatorProfileRouteImport } from "./routes/educator/profile";
+import { Route as AdminTeamRouteImport } from "./routes/admin/team";
+import { Route as AdminServicesRouteImport } from "./routes/admin/services";
+import { Route as LearnerProfileRouteImport } from "./routes/_learner/profile";
+import { Route as LearnerDashboardRouteImport } from "./routes/_learner/dashboard";
+import { Route as LearnerBookingsRouteImport } from "./routes/_learner/bookings";
+import { Route as AuthSignupRouteImport } from "./routes/_auth/signup";
+import { Route as AuthLoginRouteImport } from "./routes/_auth/login";
+import { Route as MarketingServicesIndexRouteImport } from "./routes/_marketing/services/index";
+import { Route as MarketingServicesServiceIdRouteImport } from "./routes/_marketing/services/$serviceId";
+import { Route as AuthEducatorLoginRouteImport } from "./routes/_auth/educator.login";
+import { Route as AuthAdminLoginRouteImport } from "./routes/_auth/admin.login";
+import { Route as AuthEducatorJoinTokenRouteImport } from "./routes/_auth/educator.join.$token";
 
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
+const EducatorRouteRoute = EducatorRouteRouteImport.update({
+  id: "/educator",
+  path: "/educator",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: "/admin",
+  path: "/admin",
+  getParentRoute: () => rootRouteImport,
+} as any);
 const MarketingRouteRoute = MarketingRouteRouteImport.update({
-  id: '/_marketing',
+  id: "/_marketing",
   getParentRoute: () => rootRouteImport,
-} as any)
-const AppRouteRoute = AppRouteRouteImport.update({
-  id: '/_app',
+} as any);
+const LearnerRouteRoute = LearnerRouteRouteImport.update({
+  id: "/_learner",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
+const AuthRouteRoute = AuthRouteRouteImport.update({
+  id: "/_auth",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const EducatorIndexRoute = EducatorIndexRouteImport.update({
+  id: "/",
+  path: "/",
+  getParentRoute: () => EducatorRouteRoute,
+} as any);
 const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminRoute,
-} as any)
+  id: "/",
+  path: "/",
+  getParentRoute: () => AdminRouteRoute,
+} as any);
 const MarketingIndexRoute = MarketingIndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => MarketingRouteRoute,
-} as any)
+} as any);
+const EducatorScheduleRoute = EducatorScheduleRouteImport.update({
+  id: "/schedule",
+  path: "/schedule",
+  getParentRoute: () => EducatorRouteRoute,
+} as any);
+const EducatorProfileRoute = EducatorProfileRouteImport.update({
+  id: "/profile",
+  path: "/profile",
+  getParentRoute: () => EducatorRouteRoute,
+} as any);
 const AdminTeamRoute = AdminTeamRouteImport.update({
-  id: '/team',
-  path: '/team',
-  getParentRoute: () => AdminRoute,
-} as any)
+  id: "/team",
+  path: "/team",
+  getParentRoute: () => AdminRouteRoute,
+} as any);
 const AdminServicesRoute = AdminServicesRouteImport.update({
-  id: '/services',
-  path: '/services',
-  getParentRoute: () => AdminRoute,
-} as any)
+  id: "/services",
+  path: "/services",
+  getParentRoute: () => AdminRouteRoute,
+} as any);
+const LearnerProfileRoute = LearnerProfileRouteImport.update({
+  id: "/profile",
+  path: "/profile",
+  getParentRoute: () => LearnerRouteRoute,
+} as any);
+const LearnerDashboardRoute = LearnerDashboardRouteImport.update({
+  id: "/dashboard",
+  path: "/dashboard",
+  getParentRoute: () => LearnerRouteRoute,
+} as any);
+const LearnerBookingsRoute = LearnerBookingsRouteImport.update({
+  id: "/bookings",
+  path: "/bookings",
+  getParentRoute: () => LearnerRouteRoute,
+} as any);
 const AuthSignupRoute = AuthSignupRouteImport.update({
-  id: '/_auth/signup',
-  path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
+  id: "/signup",
+  path: "/signup",
+  getParentRoute: () => AuthRouteRoute,
+} as any);
 const AuthLoginRoute = AuthLoginRouteImport.update({
-  id: '/_auth/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppAuthedRouteRoute = AppAuthedRouteRouteImport.update({
-  id: '/_authed',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppServicesIndexRoute = AppServicesIndexRouteImport.update({
-  id: '/services/',
-  path: '/services/',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppServicesServiceIdRoute = AppServicesServiceIdRouteImport.update({
-  id: '/services/$serviceId',
-  path: '/services/$serviceId',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppAuthedProfileRoute = AppAuthedProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => AppAuthedRouteRoute,
-} as any)
-const AppAuthedDashboardRoute = AppAuthedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AppAuthedRouteRoute,
-} as any)
-const AppAuthedBookingsRoute = AppAuthedBookingsRouteImport.update({
-  id: '/bookings',
-  path: '/bookings',
-  getParentRoute: () => AppAuthedRouteRoute,
-} as any)
+  id: "/login",
+  path: "/login",
+  getParentRoute: () => AuthRouteRoute,
+} as any);
+const MarketingServicesIndexRoute = MarketingServicesIndexRouteImport.update({
+  id: "/services/",
+  path: "/services/",
+  getParentRoute: () => MarketingRouteRoute,
+} as any);
+const MarketingServicesServiceIdRoute = MarketingServicesServiceIdRouteImport.update({
+  id: "/services/$serviceId",
+  path: "/services/$serviceId",
+  getParentRoute: () => MarketingRouteRoute,
+} as any);
+const AuthEducatorLoginRoute = AuthEducatorLoginRouteImport.update({
+  id: "/educator/login",
+  path: "/educator/login",
+  getParentRoute: () => AuthRouteRoute,
+} as any);
+const AuthAdminLoginRoute = AuthAdminLoginRouteImport.update({
+  id: "/admin/login",
+  path: "/admin/login",
+  getParentRoute: () => AuthRouteRoute,
+} as any);
+const AuthEducatorJoinTokenRoute = AuthEducatorJoinTokenRouteImport.update({
+  id: "/educator/join/$token",
+  path: "/educator/join/$token",
+  getParentRoute: () => AuthRouteRoute,
+} as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof MarketingIndexRoute
-  '/admin': typeof AdminRouteWithChildren
-  '/login': typeof AuthLoginRoute
-  '/signup': typeof AuthSignupRoute
-  '/admin/services': typeof AdminServicesRoute
-  '/admin/team': typeof AdminTeamRoute
-  '/admin/': typeof AdminIndexRoute
-  '/bookings': typeof AppAuthedBookingsRoute
-  '/dashboard': typeof AppAuthedDashboardRoute
-  '/profile': typeof AppAuthedProfileRoute
-  '/services/$serviceId': typeof AppServicesServiceIdRoute
-  '/services/': typeof AppServicesIndexRoute
+  "/": typeof MarketingIndexRoute;
+  "/admin": typeof AdminRouteRouteWithChildren;
+  "/educator": typeof EducatorRouteRouteWithChildren;
+  "/login": typeof AuthLoginRoute;
+  "/signup": typeof AuthSignupRoute;
+  "/bookings": typeof LearnerBookingsRoute;
+  "/dashboard": typeof LearnerDashboardRoute;
+  "/profile": typeof LearnerProfileRoute;
+  "/admin/services": typeof AdminServicesRoute;
+  "/admin/team": typeof AdminTeamRoute;
+  "/educator/profile": typeof EducatorProfileRoute;
+  "/educator/schedule": typeof EducatorScheduleRoute;
+  "/admin/": typeof AdminIndexRoute;
+  "/educator/": typeof EducatorIndexRoute;
+  "/admin/login": typeof AuthAdminLoginRoute;
+  "/educator/login": typeof AuthEducatorLoginRoute;
+  "/services/$serviceId": typeof MarketingServicesServiceIdRoute;
+  "/services/": typeof MarketingServicesIndexRoute;
+  "/educator/join/$token": typeof AuthEducatorJoinTokenRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof MarketingIndexRoute
-  '/login': typeof AuthLoginRoute
-  '/signup': typeof AuthSignupRoute
-  '/admin/services': typeof AdminServicesRoute
-  '/admin/team': typeof AdminTeamRoute
-  '/admin': typeof AdminIndexRoute
-  '/bookings': typeof AppAuthedBookingsRoute
-  '/dashboard': typeof AppAuthedDashboardRoute
-  '/profile': typeof AppAuthedProfileRoute
-  '/services/$serviceId': typeof AppServicesServiceIdRoute
-  '/services': typeof AppServicesIndexRoute
+  "/": typeof MarketingIndexRoute;
+  "/login": typeof AuthLoginRoute;
+  "/signup": typeof AuthSignupRoute;
+  "/bookings": typeof LearnerBookingsRoute;
+  "/dashboard": typeof LearnerDashboardRoute;
+  "/profile": typeof LearnerProfileRoute;
+  "/admin/services": typeof AdminServicesRoute;
+  "/admin/team": typeof AdminTeamRoute;
+  "/educator/profile": typeof EducatorProfileRoute;
+  "/educator/schedule": typeof EducatorScheduleRoute;
+  "/admin": typeof AdminIndexRoute;
+  "/educator": typeof EducatorIndexRoute;
+  "/admin/login": typeof AuthAdminLoginRoute;
+  "/educator/login": typeof AuthEducatorLoginRoute;
+  "/services/$serviceId": typeof MarketingServicesServiceIdRoute;
+  "/services": typeof MarketingServicesIndexRoute;
+  "/educator/join/$token": typeof AuthEducatorJoinTokenRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/_app': typeof AppRouteRouteWithChildren
-  '/_marketing': typeof MarketingRouteRouteWithChildren
-  '/admin': typeof AdminRouteWithChildren
-  '/_app/_authed': typeof AppAuthedRouteRouteWithChildren
-  '/_auth/login': typeof AuthLoginRoute
-  '/_auth/signup': typeof AuthSignupRoute
-  '/admin/services': typeof AdminServicesRoute
-  '/admin/team': typeof AdminTeamRoute
-  '/_marketing/': typeof MarketingIndexRoute
-  '/admin/': typeof AdminIndexRoute
-  '/_app/_authed/bookings': typeof AppAuthedBookingsRoute
-  '/_app/_authed/dashboard': typeof AppAuthedDashboardRoute
-  '/_app/_authed/profile': typeof AppAuthedProfileRoute
-  '/_app/services/$serviceId': typeof AppServicesServiceIdRoute
-  '/_app/services/': typeof AppServicesIndexRoute
+  __root__: typeof rootRouteImport;
+  "/_auth": typeof AuthRouteRouteWithChildren;
+  "/_learner": typeof LearnerRouteRouteWithChildren;
+  "/_marketing": typeof MarketingRouteRouteWithChildren;
+  "/admin": typeof AdminRouteRouteWithChildren;
+  "/educator": typeof EducatorRouteRouteWithChildren;
+  "/_auth/login": typeof AuthLoginRoute;
+  "/_auth/signup": typeof AuthSignupRoute;
+  "/_learner/bookings": typeof LearnerBookingsRoute;
+  "/_learner/dashboard": typeof LearnerDashboardRoute;
+  "/_learner/profile": typeof LearnerProfileRoute;
+  "/admin/services": typeof AdminServicesRoute;
+  "/admin/team": typeof AdminTeamRoute;
+  "/educator/profile": typeof EducatorProfileRoute;
+  "/educator/schedule": typeof EducatorScheduleRoute;
+  "/_marketing/": typeof MarketingIndexRoute;
+  "/admin/": typeof AdminIndexRoute;
+  "/educator/": typeof EducatorIndexRoute;
+  "/_auth/admin/login": typeof AuthAdminLoginRoute;
+  "/_auth/educator/login": typeof AuthEducatorLoginRoute;
+  "/_marketing/services/$serviceId": typeof MarketingServicesServiceIdRoute;
+  "/_marketing/services/": typeof MarketingServicesIndexRoute;
+  "/_auth/educator/join/$token": typeof AuthEducatorJoinTokenRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
-    | '/'
-    | '/admin'
-    | '/login'
-    | '/signup'
-    | '/admin/services'
-    | '/admin/team'
-    | '/admin/'
-    | '/bookings'
-    | '/dashboard'
-    | '/profile'
-    | '/services/$serviceId'
-    | '/services/'
-  fileRoutesByTo: FileRoutesByTo
+    | "/"
+    | "/admin"
+    | "/educator"
+    | "/login"
+    | "/signup"
+    | "/bookings"
+    | "/dashboard"
+    | "/profile"
+    | "/admin/services"
+    | "/admin/team"
+    | "/educator/profile"
+    | "/educator/schedule"
+    | "/admin/"
+    | "/educator/"
+    | "/admin/login"
+    | "/educator/login"
+    | "/services/$serviceId"
+    | "/services/"
+    | "/educator/join/$token";
+  fileRoutesByTo: FileRoutesByTo;
   to:
-    | '/'
-    | '/login'
-    | '/signup'
-    | '/admin/services'
-    | '/admin/team'
-    | '/admin'
-    | '/bookings'
-    | '/dashboard'
-    | '/profile'
-    | '/services/$serviceId'
-    | '/services'
+    | "/"
+    | "/login"
+    | "/signup"
+    | "/bookings"
+    | "/dashboard"
+    | "/profile"
+    | "/admin/services"
+    | "/admin/team"
+    | "/educator/profile"
+    | "/educator/schedule"
+    | "/admin"
+    | "/educator"
+    | "/admin/login"
+    | "/educator/login"
+    | "/services/$serviceId"
+    | "/services"
+    | "/educator/join/$token";
   id:
-    | '__root__'
-    | '/_app'
-    | '/_marketing'
-    | '/admin'
-    | '/_app/_authed'
-    | '/_auth/login'
-    | '/_auth/signup'
-    | '/admin/services'
-    | '/admin/team'
-    | '/_marketing/'
-    | '/admin/'
-    | '/_app/_authed/bookings'
-    | '/_app/_authed/dashboard'
-    | '/_app/_authed/profile'
-    | '/_app/services/$serviceId'
-    | '/_app/services/'
-  fileRoutesById: FileRoutesById
+    | "__root__"
+    | "/_auth"
+    | "/_learner"
+    | "/_marketing"
+    | "/admin"
+    | "/educator"
+    | "/_auth/login"
+    | "/_auth/signup"
+    | "/_learner/bookings"
+    | "/_learner/dashboard"
+    | "/_learner/profile"
+    | "/admin/services"
+    | "/admin/team"
+    | "/educator/profile"
+    | "/educator/schedule"
+    | "/_marketing/"
+    | "/admin/"
+    | "/educator/"
+    | "/_auth/admin/login"
+    | "/_auth/educator/login"
+    | "/_marketing/services/$serviceId"
+    | "/_marketing/services/"
+    | "/_auth/educator/join/$token";
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  AppRouteRoute: typeof AppRouteRouteWithChildren
-  MarketingRouteRoute: typeof MarketingRouteRouteWithChildren
-  AdminRoute: typeof AdminRouteWithChildren
-  AuthLoginRoute: typeof AuthLoginRoute
-  AuthSignupRoute: typeof AuthSignupRoute
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren;
+  LearnerRouteRoute: typeof LearnerRouteRouteWithChildren;
+  MarketingRouteRoute: typeof MarketingRouteRouteWithChildren;
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren;
+  EducatorRouteRoute: typeof EducatorRouteRouteWithChildren;
 }
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_marketing': {
-      id: '/_marketing'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof MarketingRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_app': {
-      id: '/_app'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AppRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/': {
-      id: '/admin/'
-      path: '/'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/_marketing/': {
-      id: '/_marketing/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof MarketingIndexRouteImport
-      parentRoute: typeof MarketingRouteRoute
-    }
-    '/admin/team': {
-      id: '/admin/team'
-      path: '/team'
-      fullPath: '/admin/team'
-      preLoaderRoute: typeof AdminTeamRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/services': {
-      id: '/admin/services'
-      path: '/services'
-      fullPath: '/admin/services'
-      preLoaderRoute: typeof AdminServicesRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/_auth/signup': {
-      id: '/_auth/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof AuthSignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_auth/login': {
-      id: '/_auth/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof AuthLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_app/_authed': {
-      id: '/_app/_authed'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AppAuthedRouteRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/services/': {
-      id: '/_app/services/'
-      path: '/services'
-      fullPath: '/services/'
-      preLoaderRoute: typeof AppServicesIndexRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/services/$serviceId': {
-      id: '/_app/services/$serviceId'
-      path: '/services/$serviceId'
-      fullPath: '/services/$serviceId'
-      preLoaderRoute: typeof AppServicesServiceIdRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/_authed/profile': {
-      id: '/_app/_authed/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AppAuthedProfileRouteImport
-      parentRoute: typeof AppAuthedRouteRoute
-    }
-    '/_app/_authed/dashboard': {
-      id: '/_app/_authed/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AppAuthedDashboardRouteImport
-      parentRoute: typeof AppAuthedRouteRoute
-    }
-    '/_app/_authed/bookings': {
-      id: '/_app/_authed/bookings'
-      path: '/bookings'
-      fullPath: '/bookings'
-      preLoaderRoute: typeof AppAuthedBookingsRouteImport
-      parentRoute: typeof AppAuthedRouteRoute
-    }
+    "/educator": {
+      id: "/educator";
+      path: "/educator";
+      fullPath: "/educator";
+      preLoaderRoute: typeof EducatorRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/admin": {
+      id: "/admin";
+      path: "/admin";
+      fullPath: "/admin";
+      preLoaderRoute: typeof AdminRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_marketing": {
+      id: "/_marketing";
+      path: "";
+      fullPath: "/";
+      preLoaderRoute: typeof MarketingRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_learner": {
+      id: "/_learner";
+      path: "";
+      fullPath: "/";
+      preLoaderRoute: typeof LearnerRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_auth": {
+      id: "/_auth";
+      path: "";
+      fullPath: "/";
+      preLoaderRoute: typeof AuthRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/educator/": {
+      id: "/educator/";
+      path: "/";
+      fullPath: "/educator/";
+      preLoaderRoute: typeof EducatorIndexRouteImport;
+      parentRoute: typeof EducatorRouteRoute;
+    };
+    "/admin/": {
+      id: "/admin/";
+      path: "/";
+      fullPath: "/admin/";
+      preLoaderRoute: typeof AdminIndexRouteImport;
+      parentRoute: typeof AdminRouteRoute;
+    };
+    "/_marketing/": {
+      id: "/_marketing/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof MarketingIndexRouteImport;
+      parentRoute: typeof MarketingRouteRoute;
+    };
+    "/educator/schedule": {
+      id: "/educator/schedule";
+      path: "/schedule";
+      fullPath: "/educator/schedule";
+      preLoaderRoute: typeof EducatorScheduleRouteImport;
+      parentRoute: typeof EducatorRouteRoute;
+    };
+    "/educator/profile": {
+      id: "/educator/profile";
+      path: "/profile";
+      fullPath: "/educator/profile";
+      preLoaderRoute: typeof EducatorProfileRouteImport;
+      parentRoute: typeof EducatorRouteRoute;
+    };
+    "/admin/team": {
+      id: "/admin/team";
+      path: "/team";
+      fullPath: "/admin/team";
+      preLoaderRoute: typeof AdminTeamRouteImport;
+      parentRoute: typeof AdminRouteRoute;
+    };
+    "/admin/services": {
+      id: "/admin/services";
+      path: "/services";
+      fullPath: "/admin/services";
+      preLoaderRoute: typeof AdminServicesRouteImport;
+      parentRoute: typeof AdminRouteRoute;
+    };
+    "/_learner/profile": {
+      id: "/_learner/profile";
+      path: "/profile";
+      fullPath: "/profile";
+      preLoaderRoute: typeof LearnerProfileRouteImport;
+      parentRoute: typeof LearnerRouteRoute;
+    };
+    "/_learner/dashboard": {
+      id: "/_learner/dashboard";
+      path: "/dashboard";
+      fullPath: "/dashboard";
+      preLoaderRoute: typeof LearnerDashboardRouteImport;
+      parentRoute: typeof LearnerRouteRoute;
+    };
+    "/_learner/bookings": {
+      id: "/_learner/bookings";
+      path: "/bookings";
+      fullPath: "/bookings";
+      preLoaderRoute: typeof LearnerBookingsRouteImport;
+      parentRoute: typeof LearnerRouteRoute;
+    };
+    "/_auth/signup": {
+      id: "/_auth/signup";
+      path: "/signup";
+      fullPath: "/signup";
+      preLoaderRoute: typeof AuthSignupRouteImport;
+      parentRoute: typeof AuthRouteRoute;
+    };
+    "/_auth/login": {
+      id: "/_auth/login";
+      path: "/login";
+      fullPath: "/login";
+      preLoaderRoute: typeof AuthLoginRouteImport;
+      parentRoute: typeof AuthRouteRoute;
+    };
+    "/_marketing/services/": {
+      id: "/_marketing/services/";
+      path: "/services";
+      fullPath: "/services/";
+      preLoaderRoute: typeof MarketingServicesIndexRouteImport;
+      parentRoute: typeof MarketingRouteRoute;
+    };
+    "/_marketing/services/$serviceId": {
+      id: "/_marketing/services/$serviceId";
+      path: "/services/$serviceId";
+      fullPath: "/services/$serviceId";
+      preLoaderRoute: typeof MarketingServicesServiceIdRouteImport;
+      parentRoute: typeof MarketingRouteRoute;
+    };
+    "/_auth/educator/login": {
+      id: "/_auth/educator/login";
+      path: "/educator/login";
+      fullPath: "/educator/login";
+      preLoaderRoute: typeof AuthEducatorLoginRouteImport;
+      parentRoute: typeof AuthRouteRoute;
+    };
+    "/_auth/admin/login": {
+      id: "/_auth/admin/login";
+      path: "/admin/login";
+      fullPath: "/admin/login";
+      preLoaderRoute: typeof AuthAdminLoginRouteImport;
+      parentRoute: typeof AuthRouteRoute;
+    };
+    "/_auth/educator/join/$token": {
+      id: "/_auth/educator/join/$token";
+      path: "/educator/join/$token";
+      fullPath: "/educator/join/$token";
+      preLoaderRoute: typeof AuthEducatorJoinTokenRouteImport;
+      parentRoute: typeof AuthRouteRoute;
+    };
   }
 }
 
-interface AppAuthedRouteRouteChildren {
-  AppAuthedBookingsRoute: typeof AppAuthedBookingsRoute
-  AppAuthedDashboardRoute: typeof AppAuthedDashboardRoute
-  AppAuthedProfileRoute: typeof AppAuthedProfileRoute
+interface AuthRouteRouteChildren {
+  AuthLoginRoute: typeof AuthLoginRoute;
+  AuthSignupRoute: typeof AuthSignupRoute;
+  AuthAdminLoginRoute: typeof AuthAdminLoginRoute;
+  AuthEducatorLoginRoute: typeof AuthEducatorLoginRoute;
+  AuthEducatorJoinTokenRoute: typeof AuthEducatorJoinTokenRoute;
 }
 
-const AppAuthedRouteRouteChildren: AppAuthedRouteRouteChildren = {
-  AppAuthedBookingsRoute: AppAuthedBookingsRoute,
-  AppAuthedDashboardRoute: AppAuthedDashboardRoute,
-  AppAuthedProfileRoute: AppAuthedProfileRoute,
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthLoginRoute: AuthLoginRoute,
+  AuthSignupRoute: AuthSignupRoute,
+  AuthAdminLoginRoute: AuthAdminLoginRoute,
+  AuthEducatorLoginRoute: AuthEducatorLoginRoute,
+  AuthEducatorJoinTokenRoute: AuthEducatorJoinTokenRoute,
+};
+
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(AuthRouteRouteChildren);
+
+interface LearnerRouteRouteChildren {
+  LearnerBookingsRoute: typeof LearnerBookingsRoute;
+  LearnerDashboardRoute: typeof LearnerDashboardRoute;
+  LearnerProfileRoute: typeof LearnerProfileRoute;
 }
 
-const AppAuthedRouteRouteWithChildren = AppAuthedRouteRoute._addFileChildren(
-  AppAuthedRouteRouteChildren,
-)
+const LearnerRouteRouteChildren: LearnerRouteRouteChildren = {
+  LearnerBookingsRoute: LearnerBookingsRoute,
+  LearnerDashboardRoute: LearnerDashboardRoute,
+  LearnerProfileRoute: LearnerProfileRoute,
+};
 
-interface AppRouteRouteChildren {
-  AppAuthedRouteRoute: typeof AppAuthedRouteRouteWithChildren
-  AppServicesServiceIdRoute: typeof AppServicesServiceIdRoute
-  AppServicesIndexRoute: typeof AppServicesIndexRoute
-}
-
-const AppRouteRouteChildren: AppRouteRouteChildren = {
-  AppAuthedRouteRoute: AppAuthedRouteRouteWithChildren,
-  AppServicesServiceIdRoute: AppServicesServiceIdRoute,
-  AppServicesIndexRoute: AppServicesIndexRoute,
-}
-
-const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
-  AppRouteRouteChildren,
-)
+const LearnerRouteRouteWithChildren = LearnerRouteRoute._addFileChildren(LearnerRouteRouteChildren);
 
 interface MarketingRouteRouteChildren {
-  MarketingIndexRoute: typeof MarketingIndexRoute
+  MarketingIndexRoute: typeof MarketingIndexRoute;
+  MarketingServicesServiceIdRoute: typeof MarketingServicesServiceIdRoute;
+  MarketingServicesIndexRoute: typeof MarketingServicesIndexRoute;
 }
 
 const MarketingRouteRouteChildren: MarketingRouteRouteChildren = {
   MarketingIndexRoute: MarketingIndexRoute,
-}
+  MarketingServicesServiceIdRoute: MarketingServicesServiceIdRoute,
+  MarketingServicesIndexRoute: MarketingServicesIndexRoute,
+};
 
 const MarketingRouteRouteWithChildren = MarketingRouteRoute._addFileChildren(
   MarketingRouteRouteChildren,
-)
+);
 
-interface AdminRouteChildren {
-  AdminServicesRoute: typeof AdminServicesRoute
-  AdminTeamRoute: typeof AdminTeamRoute
-  AdminIndexRoute: typeof AdminIndexRoute
+interface AdminRouteRouteChildren {
+  AdminServicesRoute: typeof AdminServicesRoute;
+  AdminTeamRoute: typeof AdminTeamRoute;
+  AdminIndexRoute: typeof AdminIndexRoute;
 }
 
-const AdminRouteChildren: AdminRouteChildren = {
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminServicesRoute: AdminServicesRoute,
   AdminTeamRoute: AdminTeamRoute,
   AdminIndexRoute: AdminIndexRoute,
+};
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(AdminRouteRouteChildren);
+
+interface EducatorRouteRouteChildren {
+  EducatorProfileRoute: typeof EducatorProfileRoute;
+  EducatorScheduleRoute: typeof EducatorScheduleRoute;
+  EducatorIndexRoute: typeof EducatorIndexRoute;
 }
 
-const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+const EducatorRouteRouteChildren: EducatorRouteRouteChildren = {
+  EducatorProfileRoute: EducatorProfileRoute,
+  EducatorScheduleRoute: EducatorScheduleRoute,
+  EducatorIndexRoute: EducatorIndexRoute,
+};
+
+const EducatorRouteRouteWithChildren = EducatorRouteRoute._addFileChildren(
+  EducatorRouteRouteChildren,
+);
 
 const rootRouteChildren: RootRouteChildren = {
-  AppRouteRoute: AppRouteRouteWithChildren,
+  AuthRouteRoute: AuthRouteRouteWithChildren,
+  LearnerRouteRoute: LearnerRouteRouteWithChildren,
   MarketingRouteRoute: MarketingRouteRouteWithChildren,
-  AdminRoute: AdminRouteWithChildren,
-  AuthLoginRoute: AuthLoginRoute,
-  AuthSignupRoute: AuthSignupRoute,
-}
+  AdminRouteRoute: AdminRouteRouteWithChildren,
+  EducatorRouteRoute: EducatorRouteRouteWithChildren,
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
