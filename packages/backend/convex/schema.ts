@@ -42,6 +42,17 @@ export default defineSchema({
     canCreateServices: v.optional(v.boolean()),
   }).index("by_userId", ["userId"]),
 
+  learnerProfiles: defineTable({
+    userId: v.string(),
+    isMinor: v.boolean(),
+    guardianName: v.optional(v.string()),
+    guardianPhone: v.optional(v.string()),
+    educationLevel: v.union(v.literal("wassce"), v.literal("igcse"), v.literal("alevel")),
+    subjects: v.array(v.string()),
+    examDate: v.union(v.literal("jun2026"), v.literal("nov2026"), v.literal("exploring")),
+    onboardingCompletedAt: v.number(),
+  }).index("by_userId", ["userId"]),
+
   invites: defineTable({
     email: v.string(),
     token: v.string(),

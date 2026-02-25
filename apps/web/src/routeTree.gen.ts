@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from "./routes/__root";
 import { Route as EducatorRouteRouteImport } from "./routes/educator/route";
 import { Route as AdminRouteRouteImport } from "./routes/admin/route";
+import { Route as OnboardingRouteRouteImport } from "./routes/_onboarding/route";
 import { Route as MarketingRouteRouteImport } from "./routes/_marketing/route";
 import { Route as LearnerRouteRouteImport } from "./routes/_learner/route";
 import { Route as AuthRouteRouteImport } from "./routes/_auth/route";
@@ -21,6 +22,7 @@ import { Route as EducatorScheduleRouteImport } from "./routes/educator/schedule
 import { Route as EducatorProfileRouteImport } from "./routes/educator/profile";
 import { Route as AdminTeamRouteImport } from "./routes/admin/team";
 import { Route as AdminServicesRouteImport } from "./routes/admin/services";
+import { Route as OnboardingOnboardingRouteImport } from "./routes/_onboarding/onboarding";
 import { Route as LearnerProfileRouteImport } from "./routes/_learner/profile";
 import { Route as LearnerDashboardRouteImport } from "./routes/_learner/dashboard";
 import { Route as LearnerBookingsRouteImport } from "./routes/_learner/bookings";
@@ -40,6 +42,10 @@ const EducatorRouteRoute = EducatorRouteRouteImport.update({
 const AdminRouteRoute = AdminRouteRouteImport.update({
   id: "/admin",
   path: "/admin",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const OnboardingRouteRoute = OnboardingRouteRouteImport.update({
+  id: "/_onboarding",
   getParentRoute: () => rootRouteImport,
 } as any);
 const MarketingRouteRoute = MarketingRouteRouteImport.update({
@@ -88,6 +94,11 @@ const AdminServicesRoute = AdminServicesRouteImport.update({
   id: "/services",
   path: "/services",
   getParentRoute: () => AdminRouteRoute,
+} as any);
+const OnboardingOnboardingRoute = OnboardingOnboardingRouteImport.update({
+  id: "/onboarding",
+  path: "/onboarding",
+  getParentRoute: () => OnboardingRouteRoute,
 } as any);
 const LearnerProfileRoute = LearnerProfileRouteImport.update({
   id: "/profile",
@@ -149,6 +160,7 @@ export interface FileRoutesByFullPath {
   "/bookings": typeof LearnerBookingsRoute;
   "/dashboard": typeof LearnerDashboardRoute;
   "/profile": typeof LearnerProfileRoute;
+  "/onboarding": typeof OnboardingOnboardingRoute;
   "/admin/services": typeof AdminServicesRoute;
   "/admin/team": typeof AdminTeamRoute;
   "/educator/profile": typeof EducatorProfileRoute;
@@ -168,6 +180,7 @@ export interface FileRoutesByTo {
   "/bookings": typeof LearnerBookingsRoute;
   "/dashboard": typeof LearnerDashboardRoute;
   "/profile": typeof LearnerProfileRoute;
+  "/onboarding": typeof OnboardingOnboardingRoute;
   "/admin/services": typeof AdminServicesRoute;
   "/admin/team": typeof AdminTeamRoute;
   "/educator/profile": typeof EducatorProfileRoute;
@@ -185,6 +198,7 @@ export interface FileRoutesById {
   "/_auth": typeof AuthRouteRouteWithChildren;
   "/_learner": typeof LearnerRouteRouteWithChildren;
   "/_marketing": typeof MarketingRouteRouteWithChildren;
+  "/_onboarding": typeof OnboardingRouteRouteWithChildren;
   "/admin": typeof AdminRouteRouteWithChildren;
   "/educator": typeof EducatorRouteRouteWithChildren;
   "/_auth/login": typeof AuthLoginRoute;
@@ -192,6 +206,7 @@ export interface FileRoutesById {
   "/_learner/bookings": typeof LearnerBookingsRoute;
   "/_learner/dashboard": typeof LearnerDashboardRoute;
   "/_learner/profile": typeof LearnerProfileRoute;
+  "/_onboarding/onboarding": typeof OnboardingOnboardingRoute;
   "/admin/services": typeof AdminServicesRoute;
   "/admin/team": typeof AdminTeamRoute;
   "/educator/profile": typeof EducatorProfileRoute;
@@ -216,6 +231,7 @@ export interface FileRouteTypes {
     | "/bookings"
     | "/dashboard"
     | "/profile"
+    | "/onboarding"
     | "/admin/services"
     | "/admin/team"
     | "/educator/profile"
@@ -235,6 +251,7 @@ export interface FileRouteTypes {
     | "/bookings"
     | "/dashboard"
     | "/profile"
+    | "/onboarding"
     | "/admin/services"
     | "/admin/team"
     | "/educator/profile"
@@ -251,6 +268,7 @@ export interface FileRouteTypes {
     | "/_auth"
     | "/_learner"
     | "/_marketing"
+    | "/_onboarding"
     | "/admin"
     | "/educator"
     | "/_auth/login"
@@ -258,6 +276,7 @@ export interface FileRouteTypes {
     | "/_learner/bookings"
     | "/_learner/dashboard"
     | "/_learner/profile"
+    | "/_onboarding/onboarding"
     | "/admin/services"
     | "/admin/team"
     | "/educator/profile"
@@ -276,6 +295,7 @@ export interface RootRouteChildren {
   AuthRouteRoute: typeof AuthRouteRouteWithChildren;
   LearnerRouteRoute: typeof LearnerRouteRouteWithChildren;
   MarketingRouteRoute: typeof MarketingRouteRouteWithChildren;
+  OnboardingRouteRoute: typeof OnboardingRouteRouteWithChildren;
   AdminRouteRoute: typeof AdminRouteRouteWithChildren;
   EducatorRouteRoute: typeof EducatorRouteRouteWithChildren;
 }
@@ -294,6 +314,13 @@ declare module "@tanstack/react-router" {
       path: "/admin";
       fullPath: "/admin";
       preLoaderRoute: typeof AdminRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_onboarding": {
+      id: "/_onboarding";
+      path: "";
+      fullPath: "/";
+      preLoaderRoute: typeof OnboardingRouteRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     "/_marketing": {
@@ -365,6 +392,13 @@ declare module "@tanstack/react-router" {
       fullPath: "/admin/services";
       preLoaderRoute: typeof AdminServicesRouteImport;
       parentRoute: typeof AdminRouteRoute;
+    };
+    "/_onboarding/onboarding": {
+      id: "/_onboarding/onboarding";
+      path: "/onboarding";
+      fullPath: "/onboarding";
+      preLoaderRoute: typeof OnboardingOnboardingRouteImport;
+      parentRoute: typeof OnboardingRouteRoute;
     };
     "/_learner/profile": {
       id: "/_learner/profile";
@@ -487,6 +521,18 @@ const MarketingRouteRouteWithChildren = MarketingRouteRoute._addFileChildren(
   MarketingRouteRouteChildren,
 );
 
+interface OnboardingRouteRouteChildren {
+  OnboardingOnboardingRoute: typeof OnboardingOnboardingRoute;
+}
+
+const OnboardingRouteRouteChildren: OnboardingRouteRouteChildren = {
+  OnboardingOnboardingRoute: OnboardingOnboardingRoute,
+};
+
+const OnboardingRouteRouteWithChildren = OnboardingRouteRoute._addFileChildren(
+  OnboardingRouteRouteChildren,
+);
+
 interface AdminRouteRouteChildren {
   AdminServicesRoute: typeof AdminServicesRoute;
   AdminTeamRoute: typeof AdminTeamRoute;
@@ -521,6 +567,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRouteRoute: AuthRouteRouteWithChildren,
   LearnerRouteRoute: LearnerRouteRouteWithChildren,
   MarketingRouteRoute: MarketingRouteRouteWithChildren,
+  OnboardingRouteRoute: OnboardingRouteRouteWithChildren,
   AdminRouteRoute: AdminRouteRouteWithChildren,
   EducatorRouteRoute: EducatorRouteRouteWithChildren,
 };

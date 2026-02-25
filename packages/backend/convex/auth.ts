@@ -6,6 +6,7 @@ import type { DataModel } from "./_generated/dataModel";
 import { components, internal } from "./_generated/api";
 import { query } from "./_generated/server";
 import authConfig from "./auth.config";
+import { admin } from "better-auth/plugins";
 
 const siteUrl = process.env.SITE_URL!;
 
@@ -81,6 +82,7 @@ function createAuth(ctx: GenericCtx<DataModel>) {
     },
     plugins: [
       crossDomain({ siteUrl }),
+      // admin(),
       convex({
         authConfig,
         jwksRotateOnTokenGenerationError: true,
