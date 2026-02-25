@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 import { EducatorsSection } from "@/components/landing/educators-section";
 import { FinalCtaSection } from "@/components/landing/final-cta-section";
@@ -11,6 +11,12 @@ import { StatsBar } from "@/components/landing/stats-bar";
 import { SubjectsSection } from "@/components/landing/subjects-section";
 
 export const Route = createFileRoute("/_marketing/")({
+  beforeLoad: async ({ context }) => {
+    const { data } = await context.authClient.getSession();
+    if (data?.session) {
+      throw redirect({ to: "/dashboard" });
+    }
+  },
   component: LandingPage,
 });
 

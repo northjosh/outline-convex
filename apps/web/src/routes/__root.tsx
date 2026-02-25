@@ -9,7 +9,11 @@ import { Toaster } from "@/components/ui/sonner";
 
 import "../index.css";
 
-export interface RouterAppContext {}
+import type { authClient } from "@/lib/auth-client";
+
+export interface RouterAppContext {
+	authClient: typeof authClient;
+}
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
   component: RootComponent,

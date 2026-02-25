@@ -101,7 +101,7 @@ export default function SignInForm({
         variant="outline"
         size="lg"
         className="w-full gap-2"
-        onClick={() => authClient.signIn.social({ provider: "google" })}
+        onClick={() => authClient.signIn.social({ provider: "google", callbackURL: "/dashboard" })}
       >
         <GoogleIcon />
         Continue with Google
