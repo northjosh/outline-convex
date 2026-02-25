@@ -132,7 +132,7 @@ function RouteComponent() {
 
           <SignUpForm
             onSwitchToSignIn={() => navigate({ to: "/login" })}
-            onSuccess={() => navigate({ to: "/dashboard" })}
+            onSuccess={() => navigate({ to: "/onboarding" })}
           />
         </div>
       </div>

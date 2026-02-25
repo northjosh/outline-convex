@@ -10,7 +10,7 @@
     {
       "name": "web",
       "runtimeExecutable": "bun",
-      "runtimeArgs": ["run", "dev:web"],
+      "runtimeArgs": ["run", "--cwd", "apps/web", "dev:bare"],
       "port": 3001
     },
     {

@@ -1,7 +1,9 @@
 import Header from "@/components/header";
 import { useCurrentProfile } from "@/hooks/use-current-profile";
+import { api } from "@outline-convex/backend/convex/_generated/api";
 import { Link, Outlet, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
+import { useQuery } from "convex/react";
 import { useEffect } from "react";
 
 export const Route = createFileRoute("/_learner")({
@@ -19,7 +21,15 @@ function RedirectToLogin() {
 }
 
 function LearnerContent() {
+  const navigate = useNavigate();
   const { isLearner, isTeamMember, isAdmin, isLoading } = useCurrentProfile();
+  const learnerProfile = useQuery(api.learnerProfiles.getLearnerProfile);
+
+  useEffect(() => {
+    if (isLearner && learnerProfile === null) {
+      navigate({ to: "/onboarding" });
+    }
+  }, [isLearner, learnerProfile, navigate]);
 
   if (isLoading) {
     return (
@@ -51,6 +61,15 @@ function LearnerContent() {
         <Link to="/admin" className="text-sm underline">
           Go to Admin Dashboard
         </Link>
+      </div>
+    );
+  }
+
+  // Still loading learner profile or redirecting to onboarding
+  if (learnerProfile === undefined || learnerProfile === null) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <div className="text-muted-foreground">Loading...</div>
       </div>
     );
   }

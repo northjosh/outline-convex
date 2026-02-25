@@ -13,6 +13,7 @@ import type * as auth from "../auth.js";
 import type * as healthCheck from "../healthCheck.js";
 import type * as http from "../http.js";
 import type * as invites from "../invites.js";
+import type * as learnerProfiles from "../learnerProfiles.js";
 import type * as lib_auth from "../lib/auth.js";
 import type * as lib_constants from "../lib/constants.js";
 import type * as profiles from "../profiles.js";
@@ -28,6 +29,7 @@ declare const fullApi: ApiFromModules<{
   healthCheck: typeof healthCheck;
   http: typeof http;
   invites: typeof invites;
+  learnerProfiles: typeof learnerProfiles;
   "lib/auth": typeof lib_auth;
   "lib/constants": typeof lib_constants;
   profiles: typeof profiles;
